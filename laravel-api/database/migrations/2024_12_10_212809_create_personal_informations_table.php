@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('personal_informations', function (Blueprint $table) {
-            $table->uuid();
+            $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained();
-            $table->string("country", 3)->nullable();
-            $table->date("birth_date")->nullable();
-            $table->text("about")->nullable();
-            $table->enum("contact_type", ["email", "instagram", "facebook", "discord", "x"])->nullable();
-            $table->string("contact")->nullable();
+            $table->string('country', 3)->nullable();
+            $table->date('birth_date')->nullable();
+            $table->text('about')->nullable();
+            $table->enum('contact_type', ['email', 'instagram', 'facebook', 'discord', 'x'])->nullable();
+            $table->string('contact')->nullable();
             $table->timestamps();
         });
     }

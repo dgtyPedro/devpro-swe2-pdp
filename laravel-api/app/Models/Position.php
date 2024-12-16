@@ -18,6 +18,9 @@ class Position extends Model
         'description',
     ];
 
+    protected $keyType = 'string';
+    public $incrementing = false;
+
     public function role(): BelongsToMany
     {
         return $this->belongsToMany(User::class);

@@ -27,6 +27,9 @@ class Permission extends Model
         'delete-users',
     ];
 
+    protected $keyType = 'string';
+    public $incrementing = false;
+
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);

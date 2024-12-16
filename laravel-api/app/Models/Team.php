@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\TeamFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 
 class Team extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<TeamFactory> */
     use HasFactory, Notifiable;
 
     public string $owner_id;
@@ -25,6 +26,9 @@ class Team extends Model
         'owner_id',
     ];
 
+    protected $keyType = 'string';
+    public $incrementing = false;
+
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -33,5 +37,10 @@ class Team extends Model
     public function associates(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
+    }
+
+    protected static function newFactory()
+    {
+        return TeamFactory::new();
     }
 }

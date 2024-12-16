@@ -31,6 +31,9 @@ class User extends Authenticatable
         'role_id'
     ];
 
+    protected $keyType = 'string';
+    public $incrementing = false;
+
     /**
      * The attributes that should be hidden for serialization.
      *

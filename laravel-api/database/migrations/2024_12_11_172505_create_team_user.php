@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('team_user', function (Blueprint $table) {
-            $table->foreignUuid("team_id")->constrained();
-            $table->foreignUuid("user_id")->constrained();
-            $table->foreignUuid("led_by")->constrained("users");
+            $table->foreignUuid('team_id')->constrained();
+            $table->foreignUuid('user_id')->constrained();
+            $table->foreignUuid('led_by')->constrained('users', 'id');
             $table->timestamps();
         });
     }

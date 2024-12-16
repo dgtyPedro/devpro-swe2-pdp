@@ -12,18 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('permissions', function (Blueprint $table) {
-            $table->uuid();
-            $table->foreignUuid("role_id")->constrained();
-            $table->boolean("create-teams")->default(false);
-            $table->boolean("create-users")->default(false);
-            $table->boolean("read-teams")->default(false);
-            $table->boolean("read-users")->default(false);
-            $table->boolean("update-teams")->default(false);
-            $table->boolean("update-users")->default(false);
-            $table->boolean("update-permissions")->default(false);
-            $table->boolean("update-roles")->default(false);
-            $table->boolean("delete-teams")->default(false);
-            $table->boolean("delete-users")->default(false);
+            $table->uuid('id')->primary();
+            $table->foreignUuid('role_id')->constrained();
+            $table->boolean('create-teams')->default(false);
+            $table->boolean('create-users')->default(false);
+            $table->boolean('read-teams')->default(false);
+            $table->boolean('read-users')->default(false);
+            $table->boolean('update-teams')->default(false);
+            $table->boolean('update-users')->default(false);
+            $table->boolean('update-permissions')->default(false);
+            $table->boolean('update-roles')->default(false);
+            $table->boolean('delete-teams')->default(false);
+            $table->boolean('delete-users')->default(false);
             $table->timestamps();
         });
     }

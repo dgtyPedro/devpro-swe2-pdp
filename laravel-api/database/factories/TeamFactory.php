@@ -22,6 +22,7 @@ class TeamFactory extends Factory
         if(!$user) $user = User::factory()->create();
 
         return [
+            'id' => uuid_create(),
             "name" => $this->faker->name() . " Team",
             "owner_id" => $user->id,
         ];
@@ -34,9 +35,9 @@ class TeamFactory extends Factory
     {
         return $this->afterCreating(function (Team $team) {
             if(User::all()->count() < 10) User::factory()->count(rand(10, 20))->create();
-            $users = User::all()->where("id", "!=", $team->owner_id)->random(rand(4, 8));
+            $users = User::all()->where("id", "!=", $team->getAttributeValue('owner_id'))->random(rand(4, 8));
 
-            $team->associates()->attach($users->pluck('id'));
+            $team->associates()->attach($users->pluck('id'), ["led_by" => $team->getAttributeValue('owner_id')]);
             $team->save();
         });
     }

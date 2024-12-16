@@ -15,4 +15,7 @@ class Role extends Model
         'name',
         'description',
     ];
+
+    protected $keyType = 'string';
+    public $incrementing = false;
 }
