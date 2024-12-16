@@ -14,8 +14,6 @@ class Team extends Model
     /** @use HasFactory<TeamFactory> */
     use HasFactory, Notifiable;
 
-    public string $owner_id;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -36,7 +34,9 @@ class Team extends Model
 
     public function associates(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(
+            User::class, 'team_user', 'team_id', 'user_id'
+        );
     }
 
     protected static function newFactory()
