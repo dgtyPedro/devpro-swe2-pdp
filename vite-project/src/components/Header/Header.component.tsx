@@ -1,9 +1,25 @@
-import {Header} from "./Header.styles.tsx";
+import {Header, Item} from "./Header.styles.tsx";
 
 export const HeaderComponent = () => {
     return (
         <Header>
-            Header
+            <Item>
+                Logo
+            </Item>
+            <Item>
+                <div>
+                    Projects
+                </div>
+                <div>
+                    Teams
+                </div>
+                <div>
+                    Collaborators
+                </div>
+                <div>
+                    About
+                </div>
+            </Item>
         </Header>
     )
 }
