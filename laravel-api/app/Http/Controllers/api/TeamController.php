@@ -13,8 +13,25 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $teams = Team::all()->load('owner', 'associates');
+        $teams = Team::with('owner')->get();
+
+        foreach ($teams as $team) {
+            $team->associates = $this->cascadeLoadAssociates($team, $team->owner->id);
+        }
+
         return $teams;
+    }
+
+
+    private function cascadeLoadAssociates($team, $leaderId)
+    {
+        $associates = $team->associates()->where('led_by', $leaderId)->get();
+
+        foreach ($associates as $associate) {
+            $associate->associates = $this->cascadeLoadAssociates($team, $associate->id);
+        }
+
+        return $associates;
     }
 
     /**

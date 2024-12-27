@@ -32,11 +32,16 @@ class Team extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function associates(): BelongsToMany
+    public function associates($led_by = null): BelongsToMany
     {
+        if ($led_by) {
+            return $this->belongsToMany(
+                User::class, 'team_user', 'team_id', 'user_id'
+            )->wherePivot("led_by", "=", $led_by);
+        }
         return $this->belongsToMany(
             User::class, 'team_user', 'team_id', 'user_id'
-        );
+        )->withPivot('led_by');
     }
 
     protected static function newFactory()
