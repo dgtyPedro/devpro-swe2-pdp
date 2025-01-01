@@ -6,16 +6,17 @@ export const Header = styled.header`
     text-align: center;
     display: flex;
     justify-content: space-between;
-    background: #f58220;
+    background: #62bb46;
     color: white;
-    padding: 5px;
+    padding: 12px;
     padding-inline: 40px;
-    font-weight: bold;
     box-shadow: 0 4px 8px #00000014;
 `;
 
 export const Logo = styled.div`
     display: flex;
+    font-family: "Playwrite ES Guides", serif;
+    font-size: 1.2em;
     justify-content: space-between;
     flex: 1;
     cursor: pointer;
@@ -27,8 +28,10 @@ export const Item = styled.div`
 
 export const DesktopNav = styled.div`
     display: flex;
+    align-items: center;
     flex: 1;
-    justify-content: space-between;
+    gap: 3vw;
+    justify-content: end;
     @media screen and (max-width: 800px) {
         display: none;
     }

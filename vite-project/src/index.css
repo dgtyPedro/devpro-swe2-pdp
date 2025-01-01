@@ -1,5 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Playwrite+ES+Guides&display=swap');
 
+/*
+pallete:
+green: #62bb46
+blue: #00a1e0 or #0075A3
+gray: #b2b2b2
+orange: #f58220
+yellow: #ffdd00
+black: #000000
+
+*/
 :root {
   font-family: "Lato", serif;
   line-height: 1.5;
