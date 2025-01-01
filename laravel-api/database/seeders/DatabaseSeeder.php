@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PersonalInformation;
 use App\Models\Project;
 use App\Models\Team;
 use App\Models\User;
@@ -17,6 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory(20)->create();
+        PersonalInformation::factory(15)->create();
         Project::factory(2)->create();
         Team::factory(5)->create();
     }
