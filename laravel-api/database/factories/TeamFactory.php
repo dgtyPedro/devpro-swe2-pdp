@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Project;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -18,13 +19,17 @@ class TeamFactory extends Factory
      */
     public function definition(): array
     {
-        $user = User::all()->random();
+        $user = User::inRandomOrder()->first();
         if(!$user) $user = User::factory()->create();
+
+        $project = Project::inRandomOrder()->first();
+        if(!$project) $project = Project::factory()->create();
 
         return [
             'id' => uuid_create(),
-            "name" => $this->faker->name() . " Team",
+            "name" => $this->faker->jobTitle() . " Team",
             "owner_id" => $user->id,
+            "project_id" => $project->id
         ];
     }
 

@@ -27,7 +27,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'position_id',
         'role_id'
     ];
 
@@ -55,14 +54,14 @@ class User extends Authenticatable
         ];
     }
 
-    public function position(): HasOne
-    {
-        return $this->hasOne(Position::class);
-    }
-
     public function role(): HasOne
     {
         return $this->hasOne(Role::class);
+    }
+
+    public function personalInformation(): HasOne
+    {
+        return $this->hasOne(PersonalInformation::class);
     }
 
     public function teams(): BelongsToMany
