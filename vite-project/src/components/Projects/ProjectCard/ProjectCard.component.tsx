@@ -1,12 +1,11 @@
 import {ProjectCardProps} from "./ProjectCard.interface.tsx";
 import {
-    AssociateIcon,
-    AssociatesPreview,
     ProjectBox, ProjectInfo,
     ProjectName,
     ProjectOwner,
     ProjectTeamsSummary
 } from "./ProjectCard.styles.tsx";
+import {AssociateIcon, AssociatesPreview} from "../../../common/styles";
 
 export const ProjectCardComponent = (props: ProjectCardProps) => {
     const {project} = props
