@@ -1,10 +1,16 @@
 import {DesktopNav, Header, Item, MobileNav, Logo} from "./Header.styles.tsx";
 import {Dropdown, Menu, MenuButton, MenuItem} from "@mui/base";
 import {useLocation, useNavigate} from "react-router";
+import {useState} from "react";
+import {LoginComponent} from "../Login";
 
 export const HeaderComponent = () => {
     const navigate = useNavigate();
     const location = useLocation();
+
+    const [openLogin, setOpenLogin] = useState(false);
+    const handleOpenLogin = () => setOpenLogin(true);
+    const handleCloseLogin = () => setOpenLogin(false);
 
     const checkRouteActive = (route: string) => {
         return location.pathname.includes(route)
@@ -42,8 +48,8 @@ export const HeaderComponent = () => {
                 } onClick={() => navigate("/about")}>
                     About
                 </Item>
-                <Item>
-                    Login
+                <Item onClick={handleOpenLogin}>
+                    Sign In
                 </Item>
             </DesktopNav>
             <MobileNav>
@@ -64,6 +70,7 @@ export const HeaderComponent = () => {
                     </Menu>
                 </Dropdown>
             </MobileNav>
+            <LoginComponent open={openLogin} handleClose={handleCloseLogin}/>
         </Header>
     )
 }

@@ -6,6 +6,7 @@ import {
     ProjectTeamsSummary
 } from "./ProjectCard.styles.tsx";
 import {AssociateIcon, AssociatesPreview} from "../../../common/styles";
+import {useNavigate} from "react-router";
 
 export const ProjectCardComponent = (props: ProjectCardProps) => {
     const {project} = props
@@ -15,9 +16,10 @@ export const ProjectCardComponent = (props: ProjectCardProps) => {
         return [...team.associates.map(associate => associate.name)]
     })
 
+    const navigate = useNavigate();
 
     return (
-        <ProjectBox>
+        <ProjectBox onClick={() => navigate(`/projects/${project.id}`)}>
             <ProjectInfo>
                 <ProjectName>
                     {project.name}
@@ -35,9 +37,11 @@ export const ProjectCardComponent = (props: ProjectCardProps) => {
                 {associates.map(associate => {
                     return (<AssociateIcon title={associate}>{associate.slice(0, 2)}</AssociateIcon>)
                 }).slice(0, 4)}
-                {
-                    associates.length > 4 && ` and more ${associates.length - 4} associates`
-                }
+                {associates.length > 4 && (
+                    <div>
+                        and more <b>{associates.length - 4}</b> associates
+                    </div>
+                )}
             </AssociatesPreview>
         </ProjectBox>
     )

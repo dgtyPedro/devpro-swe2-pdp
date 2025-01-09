@@ -14,8 +14,9 @@ export const AssociateIcon = styled.div`
     width: 20px;
     padding: 1px;
     font-size: 0.8em;
-    background-color: #f58220;
+    background-color: #62bb46;
     border: 1px solid white;
+    box-shadow: 0 .1rem .8rem rgba(0, 0, 0, 0.2);
     color: white;
     border-radius: 50%;
     display: flex;

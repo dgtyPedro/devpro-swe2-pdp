@@ -15,7 +15,7 @@ export const CollaboratorsComponent = () => {
             {data?.map(user => {
                 return(
                     <Collaborator>
-                        <AssociateIcon style={{zoom: "200%"}}>
+                        <AssociateIcon style={{zoom: "200%", boxShadow: "unset"}}>
                             {user.name.slice(0,2)}
                         </AssociateIcon>
                         {user.name}
