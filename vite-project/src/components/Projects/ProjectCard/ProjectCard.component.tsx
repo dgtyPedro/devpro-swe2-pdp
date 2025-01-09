@@ -11,7 +11,7 @@ import {useNavigate} from "react-router";
 export const ProjectCardComponent = (props: ProjectCardProps) => {
     const {project} = props
 
-    // change to profile picture afterwards
+    // change to profile picture afterward
     const associates = project.teams.flatMap(team => {
         return [...team.associates.map(associate => associate.name)]
     })

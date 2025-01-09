@@ -12,7 +12,10 @@ export const projectApi = createApi({
         getProjects: builder.query<Project[], void>({
             query: () => `projects`,
         }),
+        getProject: builder.query<Project, string | undefined>({
+            query: (id: string | undefined) => `projects/${id}`,
+        }),
     }),
 })
 
-export const {useGetProjectsQuery} = projectApi
+export const {useGetProjectsQuery, useGetProjectQuery} = projectApi

@@ -4,11 +4,7 @@ import {Collaborator, CollaboratorsGrid} from "./Collaborators.styles.tsx";
 import {AssociateIcon} from "../../common/styles";
 
 export const CollaboratorsComponent = () => {
-    const {data, error, isLoading} = useGetCollaboratorsQuery()
-
-    useEffect(() => {
-        console.log(data, error, isLoading)
-    }, [data, error, isLoading])
+    const {data} = useGetCollaboratorsQuery()
 
     return (
         <CollaboratorsGrid>
