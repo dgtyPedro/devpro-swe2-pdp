@@ -47,7 +47,10 @@ class TeamController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $team = Team::find($id)->load('owner');
+        $team->schema = $this->cascadeLoadAssociates($team, $team->owner->id);
+
+        return $team;
     }
 
     /**

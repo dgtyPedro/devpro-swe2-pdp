@@ -32,7 +32,9 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $project = Project::find($id)->load('owner', 'teams.associates', 'teams.owner');
+
+        return response()->json($project);
     }
 
     /**
