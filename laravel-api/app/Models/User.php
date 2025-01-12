@@ -24,6 +24,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
@@ -42,6 +43,17 @@ class User extends Authenticatable
         'password',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->id)) {
+                $model->id = uuid_create();
+            }
+        });
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -57,11 +69,6 @@ class User extends Authenticatable
     public function role(): HasOne
     {
         return $this->hasOne(Role::class);
-    }
-
-    public function personalInformation(): HasOne
-    {
-        return $this->hasOne(PersonalInformation::class);
     }
 
     public function teams(): BelongsToMany

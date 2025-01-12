@@ -3,18 +3,19 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class CollaboratorController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::with('teams', 'personalInformation')->get();
+        $users = User::with('teams')->get();
 
         return $users;
     }
@@ -24,7 +25,21 @@ class CollaboratorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|unique:users|email|max:255',
+        ]);
+
+        $user = User::create([
+                'id' => uuid_create(),
+                'password' => uuid_create(),
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'role_id' => Role::first()->id
+            ]
+        );
+
+        return $user;
     }
 
     /**

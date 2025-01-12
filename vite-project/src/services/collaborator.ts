@@ -12,7 +12,14 @@ export const collaboratorApi = createApi({
         getCollaborators: builder.query<User[], void>({
             query: () => `collaborators`,
         }),
+        createCollaborator: builder.mutation<void, Partial<User>>({
+            query: (newCollaborator) => ({
+                url: 'collaborators',
+                method: 'POST',
+                body: newCollaborator,
+            }),
+        }),
     }),
 })
 
-export const {useGetCollaboratorsQuery} = collaboratorApi
+export const {useGetCollaboratorsQuery, useCreateCollaboratorMutation} = collaboratorApi
