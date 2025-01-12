@@ -5,6 +5,7 @@ import {Modal} from "@mui/base";
 import {SchemaBox} from "./TeamSchema.styles.tsx";
 import {useOutsideClick} from "../../../../common/hooks";
 import {SchemaFragmentComponent} from "./SchemaFragment";
+import {AssociateIcon} from "../../../../common/styles";
 
 export const TeamSchemaComponent = (props: TeamSchemaProps) => {
     const {id, open, handleClose} = props
@@ -13,8 +14,6 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
     })
     const ref = useOutsideClick(handleClose);
 
-    console.log(team)
-
     return (
         <Modal
             open={open}
@@ -22,20 +21,42 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
             closeAfterTransition
-            slots={{ backdrop: Backdrop }}
+            slots={{backdrop: Backdrop}}
         >
             <SchemaBox ref={ref}>
-                oi
-                <div style={{display: "flex"}}>
-                    {
-                        team?.schema?.map((associate => {
-                            return(
-                                <SchemaFragmentComponent associate={associate}/>
-                            )
-                        }))
-                    }
+                <a onClick={handleClose}>Close</a>
+                <h2>{team?.name}'s Hierarchy</h2>
+                <div className="tf-tree">
+                    <ul>
+                        <li>
+                            <span className="tf-nc" style={
+                                {
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    textAlign: "center"
+                                }
+                            }>
+                                <AssociateIcon style={{
+                                    zoom: "200%",
+                                    boxShadow: "unset"
+                                }}>{team?.owner.name.slice(0, 2)}</AssociateIcon>
+                                <p style={{fontSize: "1.2em"}}>
+                                    {team?.owner.name}
+                                </p>
+                            </span>
+                            <ul>
+                                {
+                                    team?.schema?.map((associate => {
+                                        return (
+                                            <SchemaFragmentComponent associate={associate}/>
+                                        )
+                                    }))
+                                }
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
-
             </SchemaBox>
         </Modal>
     )
