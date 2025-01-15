@@ -1,6 +1,6 @@
 import {useCreateCollaboratorMutation, useGetCollaboratorsQuery} from "../../services/collaborator.ts";
 import {Collaborator, CollaboratorsGrid} from "./Collaborators.styles.tsx";
-import {AssociateIcon} from "../../common/styles";
+import {ActionBar, AssociateIcon} from "../../common/styles";
 import {useState} from "react";
 import {FormComponent} from "../Form";
 import {User} from "../../services/types/User.ts";
@@ -23,10 +23,12 @@ export const CollaboratorsComponent = () => {
 
     return (
         <>
-            <a onClick={handleOpenForm}>Add Collaborator</a>
-
+            <h1>Collaborators</h1>
+            <ActionBar>
+                <a onClick={handleOpenForm}>Add Collaborator</a>
+            </ActionBar>
             <CollaboratorsGrid>
-                {data?.map(user => {
+            {data?.map(user => {
                     return (
                         <Collaborator>
                             <AssociateIcon style={{zoom: "200%", boxShadow: "unset"}}>
@@ -40,7 +42,8 @@ export const CollaboratorsComponent = () => {
             <FormComponent open={openForm}
                            handleClose={handleCloseForm}
                            handleSubmit={handleSubmit}
-                           fields={fields}  />
+                           title={"Create Collaborator"}
+                           fields={fields}/>
         </>
     )
 }

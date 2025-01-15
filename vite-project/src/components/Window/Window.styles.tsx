@@ -7,6 +7,8 @@ export const Window = styled.div`
     box-shadow: 0 .3rem .8rem #00000026 !important;
     border-radius: 24px;
     padding: 40px;
+    height: 700px!important;
+    overflow-y: scroll;
     @media screen and (max-width: 800px) {
         border-radius: 0;
     }

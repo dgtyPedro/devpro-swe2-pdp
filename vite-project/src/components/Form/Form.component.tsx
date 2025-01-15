@@ -4,9 +4,10 @@ import {FormProps} from "./Form.interface.tsx";
 import {FormBox, FormButton, FormField, FormFields, FormGroup, FormLabel} from "./Form.styles.tsx";
 import {useOutsideClick} from "../../common/hooks";
 import {FormEvent} from "react";
+import {AutocompleteComponent} from "./Autocomplete";
 
 export const FormComponent = (props: FormProps) => {
-    const {open, handleClose, handleSubmit, fields} = props
+    const {open, handleClose, handleSubmit, title, fields} = props
     const ref = useOutsideClick(handleClose);
     const submitForm = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -18,6 +19,20 @@ export const FormComponent = (props: FormProps) => {
 
         handleSubmit(data)
     }
+
+    const capitalizeFirstLetter = (val: string) => {
+        return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+    }
+
+    const topFilms = [
+        {label: 'The Shawshank Redemption', value: "1"},
+        {label: 'The Godfather', value: "2"},
+        {label: 'The Godfather: Part II', value: "3"},
+        {label: 'The Dark Knight', value: "4"},
+        {label: '12 Angry Men', value: "5"},
+        {label: "Schindler's List", value: "6"},
+    ];
+
     return (
         <Modal
             open={open}
@@ -30,15 +45,24 @@ export const FormComponent = (props: FormProps) => {
             <FormBox ref={ref}>
                 <a onClick={handleClose}>Close</a>
 
-                <h2 style={{margin: 0, textAlign: "center"}}>Sign In</h2>
+                <h2 style={{margin: 0, textAlign: "center"}}>{title}</h2>
                 <FormFields onSubmit={e => submitForm(e)}>
                     {
                         Object.keys(fields).map((field, index) => {
                             const type = Object.values(fields)[index]
+                            if (type.toUpperCase() === "AUTOCOMPLETE") {
+                                return (
+                                    <FormGroup>
+                                        <AutocompleteComponent label={field} options={topFilms}/>
+                                    </FormGroup>
+                                )
+                            }
                             return (
                                 <FormGroup>
-                                    <FormField id={field} name={field} type={type} placeholder={field} required/>
-                                    <FormLabel htmlFor={field}>{field}</FormLabel>
+                                    <FormField id={field} name={field} type={type}
+                                               placeholder={capitalizeFirstLetter(field)}
+                                               required/>
+                                    <FormLabel htmlFor={field}>{capitalizeFirstLetter(field)}</FormLabel>
                                 </FormGroup>
                             )
                         })

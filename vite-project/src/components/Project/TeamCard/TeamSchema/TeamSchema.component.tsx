@@ -6,6 +6,7 @@ import {SchemaBox} from "./TeamSchema.styles.tsx";
 import {useOutsideClick} from "../../../../common/hooks";
 import {SchemaFragmentComponent} from "./SchemaFragment";
 import {AssociateIcon} from "../../../../common/styles";
+import {Divider} from "@mui/material";
 
 export const TeamSchemaComponent = (props: TeamSchemaProps) => {
     const {id, open, handleClose} = props
@@ -13,6 +14,7 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
         skip: !open,
     })
     const ref = useOutsideClick(handleClose);
+    const edit = true;
 
     return (
         <Modal
@@ -26,6 +28,7 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
             <SchemaBox ref={ref}>
                 <a onClick={handleClose}>Close</a>
                 <h2>{team?.name}'s Hierarchy</h2>
+                <Divider style={{marginBottom: 12}}/>
                 <div className="tf-tree">
                     <ul>
                         <li>
@@ -49,9 +52,18 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
                                 {
                                     team?.schema?.map((associate => {
                                         return (
-                                            <SchemaFragmentComponent associate={associate}/>
+                                            <SchemaFragmentComponent edit={edit} associate={associate}/>
                                         )
                                     }))
+                                }
+                                {
+                                    edit && (
+                                        <li>
+                                            <span className="tf-nc">
+                                                Add Collaborator
+                                            </span>
+                                        </li>
+                                    )
                                 }
                             </ul>
                         </li>
@@ -59,5 +71,5 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
                 </div>
             </SchemaBox>
         </Modal>
-    )
+)
 }

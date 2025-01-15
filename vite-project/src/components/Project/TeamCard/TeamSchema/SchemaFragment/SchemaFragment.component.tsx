@@ -2,7 +2,7 @@ import {SchemaFragmentProps} from "./SchemaFragment.interface.tsx";
 import {AssociateIcon} from "../../../../../common/styles";
 
 export const SchemaFragmentComponent = (props: SchemaFragmentProps) => {
-    const {associate} = props
+    const {associate, edit} = props
     return (
         <li>
             <span className="tf-nc" style={
@@ -22,7 +22,16 @@ export const SchemaFragmentComponent = (props: SchemaFragmentProps) => {
                     {
                         associate.associates.map(
                             associate =>
-                                <SchemaFragmentComponent associate={associate}/>
+                                <SchemaFragmentComponent edit={edit} associate={associate}/>
+                        )
+                    }
+                    {
+                        edit && (
+                            <li>
+                                            <span className="tf-nc">
+                                                Add Collaborator
+                                            </span>
+                            </li>
                         )
                     }
                 </ul>
