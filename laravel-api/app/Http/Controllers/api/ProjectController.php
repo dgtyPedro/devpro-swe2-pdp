@@ -4,7 +4,6 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
-use App\Models\Team;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -14,7 +13,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::with('owner', 'teams.associates', 'teams.owner')->get();
+        $projects = Project::with('owner', 'teams.associates', 'teams.owner')->orderByDesc('created_at')->get();
 
         return $projects;
     }
@@ -61,6 +60,7 @@ class ProjectController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Project::findOrFail($id)->delete();
+        return response()->make([], 204);
     }
 }

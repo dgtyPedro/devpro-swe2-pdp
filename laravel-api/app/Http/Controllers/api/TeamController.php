@@ -13,7 +13,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $teams = Team::with('owner')->get();
+        $teams = Team::with('owner')->orderByDesc('created_at')->get();
 
         foreach ($teams as $team) {
             $team->associates = $this->cascadeLoadAssociates($team, $team->owner->id);
@@ -39,7 +39,20 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|max:255|unique:teams',
+            'owner_id' => 'required|exists:users,id',
+            'project_id' => 'required|exists:projects,id',
+        ]);
+
+        $project = Team::create([
+            'id' => uuid_create(),
+            'name' => $request['name'],
+            'owner_id' => $request['owner_id'],
+            'project_id' => $request['project_id'],
+        ]);
+
+        return response()->json($project, 201);
     }
 
     /**

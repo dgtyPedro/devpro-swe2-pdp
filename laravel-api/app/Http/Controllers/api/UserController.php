@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('teams')->get();
+        $users = User::with('teams')->orderByDesc('created_at')->get();
 
         return $users;
     }
