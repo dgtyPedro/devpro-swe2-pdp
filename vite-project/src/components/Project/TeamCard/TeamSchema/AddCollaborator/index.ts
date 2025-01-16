@@ -1,1 +1,1 @@
-export * from './SchemaFragment.component.tsx';
+export * from './AddCollaborator.component.tsx';

@@ -23,6 +23,7 @@ export const CollaboratorsComponent = () => {
 
     const handleSubmit = async (fields: unknown) => {
         await createCollaborator(fields as Partial<User>);
+        handleCloseForm();
     }
 
     return (

@@ -7,28 +7,50 @@ import {FormComponent} from "../Form";
 import {ActionBar} from "../../common/styles";
 import {Divider} from "@mui/material";
 import {Project} from "../../services/types/Project.ts";
+import {useGetCollaboratorsQuery} from "../../services/collaborator.ts";
+import {Data} from "../Form/Form.interface.tsx";
+import {useCreateTeamMutation} from "../../services/team.ts";
 
 export const ProjectComponent = () => {
     const {id} = useParams() as unknown as Project;
     const {data: project, isLoading} = useGetProjectQuery(id)
+    const {data: collaborators} = useGetCollaboratorsQuery()
+    const [createTeam] = useCreateTeamMutation();
     const [deleteProject] = useDeleteProjectMutation();
     const navigate = useNavigate();
     const [openForm, setOpenForm] = useState(false);
     const handleOpenForm = () => setOpenForm(true);
     const handleCloseForm = () => setOpenForm(false);
+    const collaboratorsOptions = collaborators?.map(collaborator => {
+        return (
+            {
+                value: collaborator.id,
+                label: collaborator.name
+            }
+        )
+    })
 
     const fields = {
         name: {
             type: "text"
         },
-        email: {
-            type: "email",
+        leader: {
+            type: "autocomplete",
+            options: collaboratorsOptions
         }
     }
 
-    const handleSubmit = async (fields: unknown) => {
-        // to do
-        console.log(fields)
+    const handleSubmit = async (data: Data) => {
+        const owner = collaborators?.find(collaborator => collaborator.name === data.leader)
+
+        const payload = {
+            name: data.name as string,
+            owner_id: owner?.id as string,
+            project_id: id,
+        }
+
+        createTeam(payload)
+        handleCloseForm()
     }
 
     const handleDelete = async () => {

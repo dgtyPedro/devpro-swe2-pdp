@@ -7,11 +7,12 @@ import {useState} from "react";
 import {FormComponent} from "../Form";
 import {useGetCollaboratorsQuery} from "../../services/collaborator.ts";
 import {Data} from "../Form/Form.interface.tsx";
+import {LoadingComponent} from "../Loading";
 
 export const ProjectsComponent = () => {
     const {data} = useGetProjectsQuery()
     const {data: collaborators} = useGetCollaboratorsQuery()
-    const [createProject] = useCreateProjectMutation()
+    const [createProject, {isLoading}] = useCreateProjectMutation()
     const [openForm, setOpenForm] = useState(false);
     const handleOpenForm = () => setOpenForm(true);
     const handleCloseForm = () => setOpenForm(false);
@@ -35,16 +36,18 @@ export const ProjectsComponent = () => {
     }
 
     const handleSubmit = async (data: Data) => {
-        // to do
-        console.log(data)
         const owner = collaborators?.find(collaborator => collaborator.name === data.owner)
 
         const payload = {
             name: data.name as string,
             owner_id: owner?.id as string
         }
-
         createProject(payload)
+        handleCloseForm()
+    }
+
+    if (isLoading) {
+        return <LoadingComponent/>
     }
 
     return (

@@ -1,5 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import {Team} from "./types/Team.ts";
+import {projectApi} from "./project.ts";
 
 export const teamApi = createApi({
     reducerPath: 'teamApi',
@@ -13,6 +14,18 @@ export const teamApi = createApi({
         getTeam: builder.query<Team, string | undefined>({
             query: (id: string | undefined) => `teams/${id}`,
             providesTags: ['Team']
+        }),
+        createTeam: builder.mutation<Team, Partial<Team>>({
+            query: (team) => ({
+                url: 'teams/',
+                method: 'POST',
+                body: team,
+            }),
+            invalidatesTags: ['Team'],
+            async onQueryStarted(_, {dispatch, queryFulfilled}) {
+                await queryFulfilled;
+                dispatch(projectApi.util.invalidateTags(["Project"]));
+            },
         }),
         uploadTeam: builder.mutation<Team, Partial<Team>>({
             query: (team) => ({
@@ -34,6 +47,7 @@ export const teamApi = createApi({
 
 export const {
     useGetTeamQuery,
+    useCreateTeamMutation,
     useUploadTeamMutation,
     useDeleteTeamMutation
 } = teamApi

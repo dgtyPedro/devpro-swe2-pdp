@@ -1,7 +1,6 @@
-import {Associate} from "../../../../../services/types/Team.ts";
-
-export interface SchemaFragmentProps {
-    associate: Associate;
-    edit: boolean;
+export interface AddCollaboratorProps {
+    setOpenCollaboratorOptions: (state: boolean) => void,
+    depth: number,
+    setEditDepth: (depth: number) => void
 }
 

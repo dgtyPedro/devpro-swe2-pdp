@@ -1,8 +1,9 @@
 import {SchemaFragmentProps} from "./SchemaFragment.interface.tsx";
 import {AssociateIcon} from "../../../../../common/styles";
+import {AddCollaboratorComponent} from "../AddCollaborator";
 
 export const SchemaFragmentComponent = (props: SchemaFragmentProps) => {
-    const {associate, edit} = props
+    const {associate, edit, depth, setEditDepth, setOpenCollaboratorOptions} = props
     return (
         <li>
             <span className="tf-nc" style={
@@ -22,16 +23,12 @@ export const SchemaFragmentComponent = (props: SchemaFragmentProps) => {
                     {
                         associate.associates.map(
                             associate =>
-                                <SchemaFragmentComponent edit={edit} associate={associate}/>
+                                <SchemaFragmentComponent depth={depth + 1} edit={edit} associate={associate} setOpenCollaboratorOptions={setOpenCollaboratorOptions} setEditDepth={setEditDepth}/>
                         )
                     }
                     {
                         edit && (
-                            <li>
-                                            <span className="tf-nc">
-                                                Add Collaborator
-                                            </span>
-                            </li>
+                           <AddCollaboratorComponent setOpenCollaboratorOptions={setOpenCollaboratorOptions} depth={depth} setEditDepth={setEditDepth} />
                         )
                     }
                 </ul>

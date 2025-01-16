@@ -1,1 +1,1 @@
-export * from './Projects.component.tsx';
+export * from './Loading.component.tsx';

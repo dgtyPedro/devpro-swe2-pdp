@@ -2,6 +2,7 @@ import useAutocomplete from '@mui/material/useAutocomplete';
 import {styled} from '@mui/system';
 import {FormField, FormLabel} from "../Form.styles.tsx";
 import {AutocompleteProps} from "./Autocomplete.interface.tsx";
+import {useEffect} from "react";
 
 const Listbox = styled('ul')(({theme}) => ({
     width: 200,
@@ -19,6 +20,9 @@ const Listbox = styled('ul')(({theme}) => ({
         color: 'white',
         cursor: 'pointer',
     },
+    '& ul': {
+        display: 'block!important'
+    },
     '& li:active': {
         backgroundColor: '#2977f5',
         color: 'white',
@@ -29,7 +33,7 @@ const Listbox = styled('ul')(({theme}) => ({
 }));
 
 export const AutocompleteComponent = (props: AutocompleteProps) => {
-    const {label, options} = props;
+    const {label, options, onChange} = props;
 
     const capitalizeFirstLetter = (val: string) => {
         return String(val).charAt(0).toUpperCase() + String(val).slice(1);
@@ -41,12 +45,17 @@ export const AutocompleteComponent = (props: AutocompleteProps) => {
         getListboxProps,
         getOptionProps,
         groupedOptions,
+        value
     } = useAutocomplete({
         id: label,
         options: options,
         getOptionLabel: (option) => option.label,
-        getOptionKey: (option) => option.value
+        getOptionKey: (option) => option.value,
     });
+
+    useEffect(() => {
+        if (value) onChange?.(value)
+    }, [value])
 
     return (
         <div>

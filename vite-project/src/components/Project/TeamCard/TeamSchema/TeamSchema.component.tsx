@@ -7,14 +7,27 @@ import {useOutsideClick} from "../../../../common/hooks";
 import {SchemaFragmentComponent} from "./SchemaFragment";
 import {AssociateIcon} from "../../../../common/styles";
 import {Divider} from "@mui/material";
+import {AddCollaboratorComponent} from "./AddCollaborator";
+import {useGetCollaboratorsQuery} from "../../../../services/collaborator.ts";
+import {useState} from "react";
+import {ChooseCollaboratorComponent} from "./ChooseCollaborator";
 
 export const TeamSchemaComponent = (props: TeamSchemaProps) => {
     const {id, open, handleClose} = props
     const {data: team} = useGetTeamQuery(id, {
         skip: !open,
     })
+
+    const [openCollaboratorOptions, setOpenCollaboratorOptions] = useState(false)
+    const [editDepth, setEditDepth] = useState<number>()
+
     const ref = useOutsideClick(handleClose);
     const edit = true;
+    const {data: collaborators} = useGetCollaboratorsQuery()
+
+    const addCollaborator = (selectedCollaboratorId: string) => {
+        console.log(selectedCollaboratorId, editDepth)
+    }
 
     return (
         <Modal
@@ -29,6 +42,10 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
                 <a onClick={handleClose}>Close</a>
                 <h2>{team?.name}'s Hierarchy</h2>
                 <Divider style={{marginBottom: 12}}/>
+                {
+                    openCollaboratorOptions && collaborators &&
+                    <ChooseCollaboratorComponent collaborators={collaborators} handleAddCollaborator={addCollaborator}/>
+                }
                 <div className="tf-tree">
                     <ul>
                         <li>
@@ -50,17 +67,21 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
                             </span>
                             <ul>
                                 {
-                                    team?.schema?.map((associate => {
+                                    team?.schema?.map((associate) => {
                                         return (
-                                            <SchemaFragmentComponent edit={edit} associate={associate}/>
+                                            <SchemaFragmentComponent depth={1} edit={edit} associate={associate}
+                                                                     setEditDepth={setEditDepth}
+                                                                     setOpenCollaboratorOptions={setOpenCollaboratorOptions}/>
                                         )
-                                    }))
+                                    })
                                 }
                                 {
-                                    edit && (
+                                    edit && collaborators && (
                                         <li>
                                             <span className="tf-nc">
-                                                Add Collaborator
+                                                <AddCollaboratorComponent
+                                                    setOpenCollaboratorOptions={setOpenCollaboratorOptions} depth={1}
+                                                    setEditDepth={setEditDepth}/>
                                             </span>
                                         </li>
                                     )
@@ -71,5 +92,5 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
                 </div>
             </SchemaBox>
         </Modal>
-)
+    )
 }

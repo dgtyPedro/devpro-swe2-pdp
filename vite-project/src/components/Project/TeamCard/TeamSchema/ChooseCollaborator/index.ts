@@ -1,1 +1,1 @@
-export * from './AddCollaborator.component.tsx';
+export * from './ChooseCollaborator.component.tsx';
