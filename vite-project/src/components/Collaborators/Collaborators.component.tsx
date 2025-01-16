@@ -13,8 +13,12 @@ export const CollaboratorsComponent = () => {
     const handleCloseForm = () => setOpenForm(false);
 
     const fields = {
-        name: "text",
-        email: "email"
+        name: {
+            type: "text"
+        },
+        email: {
+            type: "email",
+        }
     }
 
     const handleSubmit = async (fields: unknown) => {

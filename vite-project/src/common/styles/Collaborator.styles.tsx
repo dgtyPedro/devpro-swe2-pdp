@@ -7,6 +7,7 @@ export const AssociatesPreview = styled.div`
     background: #f58220;
     color: white;
     padding: 10px;
+    flex: 1;
 `;
 
 export const AssociateIcon = styled.div`

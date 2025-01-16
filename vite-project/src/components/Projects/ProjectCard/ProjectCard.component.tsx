@@ -42,6 +42,13 @@ export const ProjectCardComponent = (props: ProjectCardProps) => {
                         and more <b>{associates.length - 4}</b> associates
                     </div>
                 )}
+                {
+                    associates.length === 0 && (
+                        <div>
+                            No collaborators
+                        </div>
+                    )
+                }
             </AssociatesPreview>
         </ProjectBox>
     )

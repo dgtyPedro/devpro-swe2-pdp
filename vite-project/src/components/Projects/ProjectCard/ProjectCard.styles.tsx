@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
 export const ProjectBox = styled.div`
-    display: block;
+    display: flex;
     border: 1px solid #f58220;
     box-shadow: 0 .1rem .8rem rgba(0, 0, 0, 0.05) !important;
     cursor: pointer;
+    flex-direction: column;
     //border-radius: 6px;
 `;
 

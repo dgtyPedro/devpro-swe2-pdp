@@ -11,6 +11,7 @@ export const FormComponent = (props: FormProps) => {
     const ref = useOutsideClick(handleClose);
     const submitForm = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+
         const data = Object.fromEntries(
             new FormData(
                 e.currentTarget
@@ -18,20 +19,12 @@ export const FormComponent = (props: FormProps) => {
         )
 
         handleSubmit(data)
+        console.log(data)
     }
 
     const capitalizeFirstLetter = (val: string) => {
         return String(val).charAt(0).toUpperCase() + String(val).slice(1);
     }
-
-    const topFilms = [
-        {label: 'The Shawshank Redemption', value: "1"},
-        {label: 'The Godfather', value: "2"},
-        {label: 'The Godfather: Part II', value: "3"},
-        {label: 'The Dark Knight', value: "4"},
-        {label: '12 Angry Men', value: "5"},
-        {label: "Schindler's List", value: "6"},
-    ];
 
     return (
         <Modal
@@ -49,11 +42,12 @@ export const FormComponent = (props: FormProps) => {
                 <FormFields onSubmit={e => submitForm(e)}>
                     {
                         Object.keys(fields).map((field, index) => {
-                            const type = Object.values(fields)[index]
+                            const type = Object.values(fields)[index].type
+                            const options = Object.values(fields)[index].options
                             if (type.toUpperCase() === "AUTOCOMPLETE") {
                                 return (
                                     <FormGroup>
-                                        <AutocompleteComponent label={field} options={topFilms}/>
+                                        <AutocompleteComponent label={field} options={options!}/>
                                     </FormGroup>
                                 )
                             }

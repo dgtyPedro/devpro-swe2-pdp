@@ -45,13 +45,15 @@ export const AutocompleteComponent = (props: AutocompleteProps) => {
         id: label,
         options: options,
         getOptionLabel: (option) => option.label,
+        getOptionKey: (option) => option.value
     });
 
     return (
         <div>
             <div {...getRootProps()}>
                 <FormField
-                    id={label} name={label}
+                    id={label}
+                    name={label}
                     placeholder={capitalizeFirstLetter(label)}
                     required
                     {...getInputProps()} />
