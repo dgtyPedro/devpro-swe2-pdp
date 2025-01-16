@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $valitaded = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|unique:users|email|max:255',
         ]);
@@ -35,6 +35,7 @@ class UserController extends Controller
                 'password' => uuid_create(),
                 'name' => $request['name'],
                 'email' => $request['email'],
+                'onboarding' => true,
                 'role_id' => Role::first()->id
             ]
         );

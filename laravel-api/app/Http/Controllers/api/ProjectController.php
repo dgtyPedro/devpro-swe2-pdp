@@ -24,7 +24,18 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|max:255|unique:projects',
+            'owner_id' => 'required|exists:users,id',
+        ]);
+
+        $project = Project::create([
+            'id' => uuid_create(),
+            'name' => $request['name'],
+            'owner_id' => $request['owner_id'],
+        ]);
+
+        return response()->json($project, 201);
     }
 
     /**

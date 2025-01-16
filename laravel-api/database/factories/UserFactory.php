@@ -19,6 +19,69 @@ class UserFactory extends Factory
      */
     protected static ?string $password;
 
+    const ROLES = [
+        "ADMIN" => [
+            'create-teams' => true,
+            'create-users' => true,
+            'read-teams' => true,
+            'read-users' => true,
+            'update-teams' => true,
+            'update-users' => true,
+            'update-permissions' => true,
+            'update-roles' => true,
+            'delete-teams' => true,
+            'delete-users' => true
+        ],
+        "COLLABORATOR" => [
+            'create-teams' => false,
+            'create-users' => false,
+            'read-teams' => true,
+            'read-users' => true,
+            'update-teams' => false,
+            'update-users' => false,
+            'update-permissions' => false,
+            'update-roles' => false,
+            'delete-teams' => false,
+            'delete-users' => false
+        ],
+        "MANAGER" => [
+            'create-teams' => true,
+            'create-users' => false,
+            'read-teams' => true,
+            'read-users' => true,
+            'update-teams' => true,
+            'update-users' => false,
+            'update-permissions' => false,
+            'update-roles' => false,
+            'delete-teams' => true,
+            'delete-users' => false
+        ],
+        "HR" => [
+            'create-teams' => false,
+            'create-users' => true,
+            'read-teams' => true,
+            'read-users' => true,
+            'update-teams' => false,
+            'update-users' => true,
+            'update-permissions' => false,
+            'update-roles' => false,
+            'delete-teams' => false,
+            'delete-users' => true
+        ],
+        "ONBOARDING" => [
+            'create-teams' => false,
+            'create-users' => false,
+            'read-teams' => false,
+            'read-users' => false,
+            'update-teams' => false,
+            'update-users' => false,
+            'update-permissions' => false,
+            'update-roles' => false,
+            'delete-teams' => false,
+            'delete-users' => false
+        ],
+    ];
+
     /**
      * Define the model's default state.
      *
@@ -26,29 +89,25 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $role = Role::inRandomOrder()->first();
-        if(!$role) {
-            $role = Role::create([
-                'id' => fake()->uuid(),
-                'name' => 'admin',
-                'description' => 'admin',
-            ]);
 
-            Permission::create([
-                'id' => fake()->uuid(),
-                'role_id' => $role->id,
-                'create-teams' => true,
-                'create-users' => true,
-                'read-teams' => true,
-                'read-users' => true,
-                'update-teams' => true,
-                'update-users' => true,
-                'update-permissions' => true,
-                'update-roles' => true,
-                'delete-teams' => true,
-                'delete-users' => true,
-            ]);
+        $roles = Role::all();
+        if ($roles->count() === 0) {
+            $roles = ['ADMIN', 'COLLABORATOR', 'MANAGER', 'HR', 'ONBOARDING'];
+            foreach ($roles as $role) {
+                $newRole = Role::create([
+                    'id' => uuid_create(),
+                    'name' => $role
+                ]);
+
+                Permission::insert([
+                    'id' => uuid_create(),
+                    'role_id' => $newRole->id,
+                    ...self::ROLES[$role]
+                ]);
+            }
         }
+
+        $role = Role::inRandomOrder()->first();
 
         return [
             'id' => uuid_create(),

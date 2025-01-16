@@ -9,6 +9,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::apiResource('teams', TeamController::class);
-Route::apiResource('collaborators', UserController::class);
-Route::apiResource('projects', ProjectController::class);
+

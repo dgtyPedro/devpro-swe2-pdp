@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Project;
+use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -16,8 +17,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(30)->create();
-        Project::factory(1)->create();
-        Team::factory(1)->create();
+//        User::factory(30)->create();
+//        Project::factory(1)->create();
+//        Team::factory(1)->create();
+        Role::factory(1)->create();
     }
 }
