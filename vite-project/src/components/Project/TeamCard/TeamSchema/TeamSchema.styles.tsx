@@ -14,5 +14,6 @@ export const SchemaBox = styled.div`
     padding: 20px;
     box-shadow: 0 0 100px 0 rgb(98, 187, 70, 0.5);
     justify-content: center;
+    align-items: center;
 `;
 

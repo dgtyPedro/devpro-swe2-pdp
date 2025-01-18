@@ -27,6 +27,30 @@ export const teamApi = createApi({
                 dispatch(projectApi.util.invalidateTags(["Project"]));
             },
         }),
+        attachCollaborator: builder.mutation<void, Record<string, string>>({
+            query: (payload) => ({
+                url: `teams/${payload.id}/attachCollaborator`,
+                method: 'PUT',
+                body: payload,
+            }),
+            invalidatesTags: ['Team'],
+            async onQueryStarted(_, {dispatch, queryFulfilled}) {
+                await queryFulfilled;
+                dispatch(projectApi.util.invalidateTags(["Project"]));
+            },
+        }),
+        detachCollaborator: builder.mutation<void, Record<string, string>>({
+            query: (payload) => ({
+                url: `teams/${payload.id}/detachCollaborator`,
+                method: 'PUT',
+                body: payload,
+            }),
+            invalidatesTags: ['Team'],
+            async onQueryStarted(_, {dispatch, queryFulfilled}) {
+                await queryFulfilled;
+                dispatch(projectApi.util.invalidateTags(["Project"]));
+            },
+        }),
         uploadTeam: builder.mutation<Team, Partial<Team>>({
             query: (team) => ({
                 url: 'teams/' + team.id,
@@ -49,5 +73,7 @@ export const {
     useGetTeamQuery,
     useCreateTeamMutation,
     useUploadTeamMutation,
-    useDeleteTeamMutation
+    useDeleteTeamMutation,
+    useAttachCollaboratorMutation,
+    useDetachCollaboratorMutation
 } = teamApi

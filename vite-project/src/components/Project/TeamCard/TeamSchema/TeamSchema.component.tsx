@@ -1,5 +1,9 @@
 import {TeamSchemaProps} from "./TeamSchema.interface.tsx";
-import {useGetTeamQuery} from "../../../../services/team.ts";
+import {
+    useAttachCollaboratorMutation,
+    useDetachCollaboratorMutation,
+    useGetTeamQuery
+} from "../../../../services/team.ts";
 import Backdrop from "@mui/material/Backdrop";
 import {Modal} from "@mui/base";
 import {SchemaBox} from "./TeamSchema.styles.tsx";
@@ -18,15 +22,39 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
         skip: !open,
     })
 
+    const [attachCollaborator] = useAttachCollaboratorMutation();
+    const [detachCollaborator] = useDetachCollaboratorMutation();
+
     const [openCollaboratorOptions, setOpenCollaboratorOptions] = useState(false)
-    const [editDepth, setEditDepth] = useState<number>()
+    const [editDepth, setEditDepth] = useState<string>()
 
     const ref = useOutsideClick(handleClose);
     const edit = true;
     const {data: collaborators} = useGetCollaboratorsQuery()
 
+    const availableCollaborators = collaborators?.filter(collaborator =>
+        !team?.associates.map(associate => associate.id)?.includes(collaborator.id))
+
     const addCollaborator = (selectedCollaboratorId: string) => {
-        console.log(selectedCollaboratorId, editDepth)
+        if (!editDepth) return;
+
+        const payload = {
+            id: id,
+            user_id: selectedCollaboratorId,
+            led_by: editDepth
+        };
+
+        setOpenCollaboratorOptions(false)
+
+        attachCollaborator(payload)
+    }
+
+    const removeCollaborator = (collaboratorId: string) => {
+        const payload = {
+            id: id,
+            user_id: collaboratorId,
+        };
+        detachCollaborator(payload)
     }
 
     return (
@@ -39,12 +67,15 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
             slots={{backdrop: Backdrop}}
         >
             <SchemaBox ref={ref}>
-                <a onClick={handleClose}>Close</a>
-                <h2>{team?.name}'s Hierarchy</h2>
-                <Divider style={{marginBottom: 12}}/>
+                <div style={{width: "100%"}}>
+                    <a onClick={handleClose}>Close</a>
+                    <h2>{team?.name}'s Hierarchy</h2>
+                    <Divider style={{marginBottom: 12}}/>
+                </div>
                 {
-                    openCollaboratorOptions && collaborators &&
-                    <ChooseCollaboratorComponent collaborators={collaborators} handleAddCollaborator={addCollaborator}/>
+                    openCollaboratorOptions && availableCollaborators &&
+                    <ChooseCollaboratorComponent collaborators={availableCollaborators}
+                                                 handleAddCollaborator={addCollaborator}/>
                 }
                 <div className="tf-tree">
                     <ul>
@@ -69,21 +100,25 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
                                 {
                                     team?.schema?.map((associate) => {
                                         return (
-                                            <SchemaFragmentComponent depth={1} edit={edit} associate={associate}
-                                                                     setEditDepth={setEditDepth}
-                                                                     setOpenCollaboratorOptions={setOpenCollaboratorOptions}/>
+                                            <SchemaFragmentComponent
+                                                openCollaboratorOptions={openCollaboratorOptions} depth={associate.id}
+                                                edit={edit}
+                                                associate={associate}
+                                                editDepth={editDepth}
+                                                setEditDepth={setEditDepth}
+                                                setOpenCollaboratorOptions={setOpenCollaboratorOptions}
+                                                removeCollaborator={removeCollaborator}/>
                                         )
                                     })
                                 }
                                 {
-                                    edit && collaborators && (
-                                        <li>
-                                            <span className="tf-nc">
-                                                <AddCollaboratorComponent
-                                                    setOpenCollaboratorOptions={setOpenCollaboratorOptions} depth={1}
-                                                    setEditDepth={setEditDepth}/>
-                                            </span>
-                                        </li>
+                                    edit && team?.owner && availableCollaborators && (
+                                        <AddCollaboratorComponent
+                                            openCollaboratorOptions={openCollaboratorOptions}
+                                            editDepth={editDepth}
+                                            setOpenCollaboratorOptions={setOpenCollaboratorOptions}
+                                            depth={team.owner.id}
+                                            setEditDepth={setEditDepth}/>
                                     )
                                 }
                             </ul>

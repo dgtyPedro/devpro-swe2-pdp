@@ -1,6 +1,8 @@
 export interface AddCollaboratorProps {
+    openCollaboratorOptions: boolean,
     setOpenCollaboratorOptions: (state: boolean) => void,
-    depth: number,
-    setEditDepth: (depth: number) => void
+    depth: string,
+    editDepth: string | undefined,
+    setEditDepth: (depth: string) => void
 }
 

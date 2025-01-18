@@ -19,7 +19,6 @@ export const FormComponent = (props: FormProps) => {
         )
 
         handleSubmit(data)
-        console.log(data)
     }
 
     const capitalizeFirstLetter = (val: string) => {

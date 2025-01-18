@@ -1,8 +1,8 @@
 import {AddCollaboratorProps} from "./AddCollaborator.interface.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export const AddCollaboratorComponent = (props: AddCollaboratorProps) => {
-    const {setOpenCollaboratorOptions, depth, setEditDepth} = props
+    const {openCollaboratorOptions, setOpenCollaboratorOptions, depth, editDepth, setEditDepth} = props
     const [inputMode, setInputMode] = useState(false)
 
     const handleButton = () => {
@@ -12,10 +12,21 @@ export const AddCollaboratorComponent = (props: AddCollaboratorProps) => {
         setEditDepth(depth)
     }
 
+    const disabled = openCollaboratorOptions && editDepth !== depth;
+
+    useEffect(() => {
+        if (editDepth !== depth) setInputMode(false)
+    }, [depth, editDepth])
+
+
     return (
-        <button onClick={handleButton}>{
-            inputMode ? "Selecting... (Click to close)" : "Add Collaborator"
-        }
-        </button>
+        <li>
+            <span className="tf-nc">
+                <button disabled={disabled} onClick={handleButton}>{
+                    editDepth === depth && inputMode ? "Selecting... (Click to close)" : "Add Collaborator"
+                }
+                </button>
+            </span>
+        </li>
     )
 }
