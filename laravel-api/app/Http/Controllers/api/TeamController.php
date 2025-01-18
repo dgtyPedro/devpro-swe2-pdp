@@ -4,7 +4,9 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Team;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TeamController extends Controller
 {
@@ -13,7 +15,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $teams = Team::with('owner')->orderByDesc('created_at')->get();
+        $teams = Team::with('owner', 'associates')->orderByDesc('created_at')->get();
 
         foreach ($teams as $team) {
             $team->associates = $this->cascadeLoadAssociates($team, $team->owner->id);
@@ -60,7 +62,7 @@ class TeamController extends Controller
      */
     public function show(string $id)
     {
-        $team = Team::find($id)->load('owner');
+        $team = Team::find($id)->load('owner', 'associates');
         $team->schema = $this->cascadeLoadAssociates($team, $team->owner->id);
 
         return $team;
@@ -80,5 +82,35 @@ class TeamController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function attachCollaborator(Request $request, string $id)
+    {
+        $validated = $request->validate([
+            'led_by' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        $team = Team::find($id)->associates()->attach($validated['user_id'], ['led_by' => $validated['led_by']]);
+
+        return $team;
+    }
+
+    public function detachCollaborator(Request $request, string $id)
+    {
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        $team = DB::transaction(function () use ($id, $validated) {
+            $team = Team::find($id);
+            $team->associates()->detach($validated['user_id']);
+
+            Team::syncSchema($team);
+
+            return $team;
+        });
+
+        return $team;
     }
 }

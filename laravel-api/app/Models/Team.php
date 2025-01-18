@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class Team extends Model
 {
@@ -34,17 +35,47 @@ class Team extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function associates($led_by = null): BelongsToMany
+    public function associates(): BelongsToMany
     {
-        if ($led_by) {
-            return $this->belongsToMany(
-                User::class, 'team_user', 'team_id', 'user_id'
-            )->wherePivot("led_by", "=", $led_by);
-        }
         return $this->belongsToMany(
             User::class, 'team_user', 'team_id', 'user_id'
-        )->withPivot('led_by');
+        );
     }
+
+    public static function syncSchema(Team $team): void
+    {
+        DB::statement("
+        WITH RECURSIVE cte AS (
+            -- Seleciona os líderes inválidos (não estão no time e não são o owner)
+            SELECT team_id, user_id, led_by
+            FROM team_user
+            WHERE team_id = :teamId
+              AND led_by IS NOT NULL
+              AND led_by NOT IN (
+                  SELECT user_id
+                  FROM team_user
+                  WHERE team_id = :teamId
+              )
+              AND led_by != :ownerId
+
+            UNION ALL
+
+            -- Busca os usuários liderados por esses líderes
+            SELECT u.team_id, u.user_id, u.led_by
+            FROM team_user u
+            INNER JOIN cte ON u.led_by = cte.user_id
+            WHERE u.team_id = :teamId
+        )
+        DELETE FROM team_user
+        WHERE (team_id, user_id) IN (
+            SELECT team_id, user_id FROM cte
+        )
+    ", [
+            'teamId' => $team->id,
+            'ownerId' => $team->owner_id,
+        ]);
+    }
+
 
     protected static function newFactory()
     {
