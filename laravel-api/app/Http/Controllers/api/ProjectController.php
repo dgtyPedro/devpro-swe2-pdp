@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -60,7 +61,16 @@ class ProjectController extends Controller
      */
     public function destroy(string $id)
     {
-        // Project::findOrFail($id)->delete();
+        DB::transaction(function () use ($id) {
+            $project = Project::findOrFail($id);
+            $teams = $project->teams;
+            foreach ($teams as $team) {
+                $team->associates()->detach();
+                $team->delete();
+            }
+            $project->delete();
+        });
+
         return response()->make([], 204);
     }
 }

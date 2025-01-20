@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
+use function PHPUnit\Framework\throwException;
 
 class UserController extends Controller
 {
@@ -15,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('teams')->orderByDesc('created_at')->get();
+        $users = User::with('teams', 'leads')->orderByDesc('created_at')->get();
 
         return $users;
     }
@@ -61,9 +63,25 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @throws BindingResolutionException
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id)->load('teams');
+        if ($user->owns()->count() > 0) {
+            return response()->make("Collaborator is the owner of projects. Replace the ownership before deleting it.", 500);
+        }
+
+        if ($user->leads()->count() > 0) {
+            return response()->make("Collaborator is the leader of a team. Replace the leadership before deleting it.", 500);
+        }
+
+        foreach ($user->teams as $team) {
+            $team->detach();
+            Team::syncSchema($team);
+        }
+
+        $user->delete();
+        return response()->make([], 204);
     }
 }

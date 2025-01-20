@@ -81,7 +81,12 @@ class TeamController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::transaction(function () use ($id) {
+            $team = Team::findOrFail($id);
+            $team->associates()->detach();
+            $team->delete();
+        });
+        return response()->make([], 204);
     }
 
     public function attachCollaborator(Request $request, string $id)
