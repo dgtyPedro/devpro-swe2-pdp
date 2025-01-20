@@ -55,16 +55,17 @@ export const ProjectComponent = () => {
 
     const handleDelete = async () => {
         if(id) deleteProject(id)
+        navigate("/projects");
     }
 
     if (isLoading) return (<></>);
     return (
         <>
             <a onClick={() => navigate(-1)}>Go Back</a>
-            <h1 onClick={handleDelete}>{project?.name}</h1>
+            <h1>{project?.name}</h1>
             <ActionBar>
                 <a onClick={handleOpenForm}>Create Team</a>
-                <a>Delete Project</a>
+                <a onClick={() => handleDelete()}>Delete Project</a>
             </ActionBar>
             <Divider/>
             <h4>Project Owner: {project?.owner.name}</h4>

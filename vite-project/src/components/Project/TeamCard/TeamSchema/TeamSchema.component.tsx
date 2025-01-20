@@ -1,6 +1,6 @@
 import {TeamSchemaProps} from "./TeamSchema.interface.tsx";
 import {
-    useAttachCollaboratorMutation,
+    useAttachCollaboratorMutation, useDeleteTeamMutation,
     useDetachCollaboratorMutation,
     useGetTeamQuery
 } from "../../../../services/team.ts";
@@ -9,7 +9,7 @@ import {Modal} from "@mui/base";
 import {SchemaBox} from "./TeamSchema.styles.tsx";
 import {useOutsideClick} from "../../../../common/hooks";
 import {SchemaFragmentComponent} from "./SchemaFragment";
-import {AssociateIcon} from "../../../../common/styles";
+import {ActionBar, AssociateIcon} from "../../../../common/styles";
 import {Divider} from "@mui/material";
 import {AddCollaboratorComponent} from "./AddCollaborator";
 import {useGetCollaboratorsQuery} from "../../../../services/collaborator.ts";
@@ -24,6 +24,7 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
 
     const [attachCollaborator] = useAttachCollaboratorMutation();
     const [detachCollaborator] = useDetachCollaboratorMutation();
+    const [deleteTeam] = useDeleteTeamMutation();
 
     const [openCollaboratorOptions, setOpenCollaboratorOptions] = useState(false)
     const [editDepth, setEditDepth] = useState<string>()
@@ -57,6 +58,11 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
         detachCollaborator(payload)
     }
 
+    const handleDeleteTeam = () => {
+        deleteTeam(id)
+        handleClose()
+    }
+
     return (
         <Modal
             open={open}
@@ -68,7 +74,11 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
         >
             <SchemaBox ref={ref}>
                 <div style={{width: "100%"}}>
-                    <a onClick={handleClose}>Close</a>
+                    <ActionBar>
+                        <a onClick={handleClose}>Close</a>
+                        <a onClick={handleDeleteTeam}>Delete Team</a>
+                    </ActionBar>
+
                     <h2>{team?.name}'s Hierarchy</h2>
                     <Divider style={{marginBottom: 12}}/>
                 </div>
@@ -77,7 +87,7 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
                     <ChooseCollaboratorComponent collaborators={availableCollaborators}
                                                  handleAddCollaborator={addCollaborator}/>
                 }
-                <div className="tf-tree">
+                <div className="tf-tree" style={{width: "100%"}}>
                     <ul>
                         <li>
                             <span className="tf-nc" style={

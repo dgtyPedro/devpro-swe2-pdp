@@ -64,7 +64,10 @@ export const teamApi = createApi({
                 url: 'teams/' + id,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['Team']
+            async onQueryStarted(_, {dispatch, queryFulfilled}) {
+                await queryFulfilled;
+                dispatch(projectApi.util.invalidateTags(["Project"]));
+            },
         }),
     }),
 })
