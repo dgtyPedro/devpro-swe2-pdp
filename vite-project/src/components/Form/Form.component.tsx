@@ -37,7 +37,7 @@ export const FormComponent = (props: FormProps) => {
             <FormBox ref={ref}>
                 <a onClick={handleClose}>Close</a>
 
-                <h2 style={{margin: 0, textAlign: "center"}}>{title}</h2>
+                <h2>{title}</h2>
                 <FormFields onSubmit={e => submitForm(e)}>
                     {
                         Object.keys(fields).map((field, index) => {

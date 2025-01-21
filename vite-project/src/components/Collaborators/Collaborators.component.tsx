@@ -1,13 +1,20 @@
-import {useCreateCollaboratorMutation, useGetCollaboratorsQuery} from "../../services/collaborator.ts";
+import {
+    useCreateCollaboratorMutation,
+    useDeleteCollaboratorMutation,
+    useGetCollaboratorsQuery
+} from "../../services/collaborator.ts";
 import {Collaborator, CollaboratorsGrid} from "./Collaborators.styles.tsx";
-import {ActionBar, AssociateIcon} from "../../common/styles";
+import {ActionBar, RemoveNotch} from "../../common/styles";
 import {useState} from "react";
 import {FormComponent} from "../Form";
 import {User} from "../../services/types/User.ts";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import {AssociateIconComponent} from "../../common/components";
 
 export const CollaboratorsComponent = () => {
     const {data} = useGetCollaboratorsQuery()
     const [createCollaborator] = useCreateCollaboratorMutation();
+    const [deleteCollaborator] = useDeleteCollaboratorMutation();
     const [openForm, setOpenForm] = useState(false);
     const handleOpenForm = () => setOpenForm(true);
     const handleCloseForm = () => setOpenForm(false);
@@ -33,12 +40,14 @@ export const CollaboratorsComponent = () => {
                 <a onClick={handleOpenForm}>Add Collaborator</a>
             </ActionBar>
             <CollaboratorsGrid>
-            {data?.map(user => {
+                {data?.map(user => {
                     return (
                         <Collaborator>
-                            <AssociateIcon style={{zoom: "200%", boxShadow: "unset"}}>
-                                {user.name.slice(0, 2)}
-                            </AssociateIcon>
+                            <RemoveNotch>
+                                <RemoveCircleIcon sx={{zoom: "60%", cursor: "pointer"}} color={"error"}
+                                                  onClick={() => deleteCollaborator(user.id)}/>
+                            </RemoveNotch>
+                            <AssociateIconComponent hasShadow={false} name={user.name} size={"big"} />
                             {user.name}
                         </Collaborator>
                     )

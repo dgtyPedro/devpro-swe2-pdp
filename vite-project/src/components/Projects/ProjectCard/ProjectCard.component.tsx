@@ -5,15 +5,16 @@ import {
     ProjectOwner,
     ProjectTeamsSummary
 } from "./ProjectCard.styles.tsx";
-import {AssociateIcon, AssociatesPreview} from "../../../common/styles";
+import {AssociatesPreview} from "../../../common/styles";
 import {useNavigate} from "react-router";
+import {AssociateIconComponent} from "../../../common/components";
 
 export const ProjectCardComponent = (props: ProjectCardProps) => {
     const {project} = props
 
     // change to profile picture afterward
     const associates = project.teams.flatMap(team => {
-        return [...team.associates.map(associate => associate.name)]
+        return [...team.associates]
     })
 
     const navigate = useNavigate();
@@ -25,7 +26,7 @@ export const ProjectCardComponent = (props: ProjectCardProps) => {
                     {project.name}
                 </ProjectName>
                 <ProjectOwner>
-                    <AssociateIcon>{project.owner.name.slice(0,2)}</AssociateIcon>
+                    <AssociateIconComponent hasShadow name={project.owner.name} />
                     {project.owner.name}
                 </ProjectOwner>
                 <ProjectTeamsSummary>
@@ -35,7 +36,9 @@ export const ProjectCardComponent = (props: ProjectCardProps) => {
 
             <AssociatesPreview>
                 {associates.map(associate => {
-                    return (<AssociateIcon title={associate}>{associate.slice(0, 2)}</AssociateIcon>)
+                    return (
+                        <AssociateIconComponent hasShadow name={associate.name} />
+                )
                 }).slice(0, 4)}
                 {associates.length > 4 && (
                     <div>

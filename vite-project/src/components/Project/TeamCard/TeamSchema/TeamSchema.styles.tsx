@@ -17,3 +17,17 @@ export const SchemaBox = styled.div`
     align-items: center;
 `;
 
+export const Tree = styled.div.attrs({
+    className: 'tf-tree',
+})`
+    width: 100%
+`;
+
+export const Nc = styled.span.attrs({
+    className: 'tf-nc',
+})`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center
+`;

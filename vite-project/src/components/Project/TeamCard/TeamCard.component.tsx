@@ -5,9 +5,9 @@ import {
     TeamOwner,
     TeamInfo, TeamAssociates,
 } from "./TeamCard.styles.tsx";
-import {AssociateIcon} from "../../../common/styles";
 import {TeamSchemaComponent} from "./TeamSchema";
 import {useState} from "react";
+import {AssociateIconComponent} from "../../../common/components";
 
 export const TeamCardComponent = (props: TeamCardProps) => {
     const {team} = props
@@ -24,20 +24,17 @@ export const TeamCardComponent = (props: TeamCardProps) => {
                         {team.name}
                     </TeamName>
                     <TeamOwner>
-                        <p style={{margin: 0}}>Team Leader:</p>
-                        <AssociateIcon style={{boxShadow: "unset"}}>{team.owner.name.slice(0, 2)}</AssociateIcon>
+                        <p>Team Leader:</p>
+                        <AssociateIconComponent hasShadow={false} name={team.owner.name} />
                         {team.owner.name}
                     </TeamOwner>
                     <div>
                         <TeamAssociates>
-                            <p style={{margin: 0}}>Collaborators:</p>
+                            <p>Collaborators:</p>
                             {
                                 team.associates.map(associate => {
                                     return (
-                                        <AssociateIcon title={associate.name}
-                                                       style={{zoom: "120%", boxShadow: "unset"}}>
-                                            {associate.name.slice(0, 2)}
-                                        </AssociateIcon>
+                                        <AssociateIconComponent name={associate.name} hasShadow={false}/>
                                     )
                                 }).slice(0, 10)
                             }

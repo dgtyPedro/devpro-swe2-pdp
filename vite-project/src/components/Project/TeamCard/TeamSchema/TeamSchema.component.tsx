@@ -6,15 +6,16 @@ import {
 } from "../../../../services/team.ts";
 import Backdrop from "@mui/material/Backdrop";
 import {Modal} from "@mui/base";
-import {SchemaBox} from "./TeamSchema.styles.tsx";
+import {Nc, SchemaBox, Tree} from "./TeamSchema.styles.tsx";
 import {useOutsideClick} from "../../../../common/hooks";
 import {SchemaFragmentComponent} from "./SchemaFragment";
-import {ActionBar, AssociateIcon} from "../../../../common/styles";
+import {ActionBar} from "../../../../common/styles";
 import {Divider} from "@mui/material";
 import {AddCollaboratorComponent} from "./AddCollaborator";
 import {useGetCollaboratorsQuery} from "../../../../services/collaborator.ts";
 import {useState} from "react";
 import {ChooseCollaboratorComponent} from "./ChooseCollaborator";
+import {AssociateIconComponent} from "../../../../common/components";
 
 export const TeamSchemaComponent = (props: TeamSchemaProps) => {
     const {id, open, handleClose} = props
@@ -73,39 +74,26 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
             slots={{backdrop: Backdrop}}
         >
             <SchemaBox ref={ref}>
-                <div style={{width: "100%"}}>
+                <div>
                     <ActionBar>
                         <a onClick={handleClose}>Close</a>
                         <a onClick={handleDeleteTeam}>Delete Team</a>
                     </ActionBar>
 
                     <h2>{team?.name}'s Hierarchy</h2>
-                    <Divider style={{marginBottom: 12}}/>
+                    <Divider sx={{marginBottom: 12}}/>
                 </div>
                 {
                     openCollaboratorOptions && availableCollaborators &&
                     <ChooseCollaboratorComponent collaborators={availableCollaborators}
                                                  handleAddCollaborator={addCollaborator}/>
                 }
-                <div className="tf-tree" style={{width: "100%"}}>
+                <Tree>
                     <ul>
                         <li>
-                            <span className="tf-nc" style={
-                                {
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: "center",
-                                    textAlign: "center"
-                                }
-                            }>
-                                <AssociateIcon style={{
-                                    zoom: "200%",
-                                    boxShadow: "unset"
-                                }}>{team?.owner.name.slice(0, 2)}</AssociateIcon>
-                                <p style={{fontSize: "1.2em"}}>
-                                    {team?.owner.name}
-                                </p>
-                            </span>
+                            <Nc>
+                                <AssociateIconComponent hasShadow={false} name={team?.owner.name || ""} size={"big"}/>
+                            </Nc>
                             <ul>
                                 {
                                     team?.schema?.map((associate) => {
@@ -134,7 +122,7 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
                             </ul>
                         </li>
                     </ul>
-                </div>
+                </Tree>
             </SchemaBox>
         </Modal>
     )

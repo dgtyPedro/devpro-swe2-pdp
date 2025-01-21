@@ -19,7 +19,7 @@ export const LoginComponent = (props: LoginProps) => {
             <LoginBox ref={ref}>
                 <a onClick={handleClose}>Close</a>
 
-                <h2 style={{margin: 0, textAlign: "center"}}>Sign In</h2>
+                <h2>Sign In</h2>
                 <LoginFields>
                     <LoginGroup>
                         <LoginField id="email" name="email" placeholder="email" required/>

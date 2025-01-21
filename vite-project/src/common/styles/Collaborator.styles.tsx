@@ -24,3 +24,31 @@ export const AssociateIcon = styled.div`
     justify-content: center;
     align-items: center;
 `;
+
+export const SmallAssociateIcon = styled.div`
+    height: 10px;
+    width: 10px;
+    padding: 1px;
+    font-size: 0.5em;
+    background-color: #62bb46;
+    border: 1px solid white;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const BigAssociateIcon = styled.div`
+    height: 40px;
+    width: 40px;
+    padding: 1px;
+    font-size: 1.2em;
+    background-color: #62bb46;
+    border: 1px solid white;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;

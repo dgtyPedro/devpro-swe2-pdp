@@ -1,7 +1,10 @@
 import {SchemaFragmentProps} from "./SchemaFragment.interface.tsx";
-import {AssociateIcon} from "../../../../../common/styles";
+import {BigAssociateIcon, RemoveNotch} from "../../../../../common/styles";
 import {AddCollaboratorComponent} from "../AddCollaborator";
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import {Nc} from "../TeamSchema.styles.tsx";
+import {useNameInitials} from "../../../../../common/hooks/UseNameInitials.tsx";
+import {useSmallName} from "../../../../../common/hooks/UseSmallName.tsx";
 
 export const SchemaFragmentComponent = (props: SchemaFragmentProps) => {
     const {
@@ -17,29 +20,14 @@ export const SchemaFragmentComponent = (props: SchemaFragmentProps) => {
     return (
 
         <li>
-            <span className="tf-nc" style={
-                {
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    textAlign: "center",
-                }
-            }>
-                <div style={
-                    {
-                        flex: 1,
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "end"
-                    }
-                }>
-                    <RemoveCircleIcon sx={{zoom: "60%", cursor: "pointer"}} color={"error"}
+            <Nc>
+                <RemoveNotch>
+                    <RemoveCircleIcon color={"error"}
                                       onClick={() => removeCollaborator(associate.id)}/>
-                </div>
-
-                <AssociateIcon style={{zoom: "130%", boxShadow: "unset"}}>{associate.name.slice(0, 2)}</AssociateIcon>
-                {associate.name.split(' ').slice(0, 2).join(' ')}
-            </span>
+                </RemoveNotch>
+                <BigAssociateIcon>{useNameInitials(associate.name)}</BigAssociateIcon>
+                {useSmallName(associate.name)}
+            </Nc>
             <ul>
                 {
                     associate.associates.length > 0 &&
