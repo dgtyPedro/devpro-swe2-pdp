@@ -10,11 +10,12 @@ export const ActionBar = styled.div`
 
 export const RemoveNotch = styled.div`
     display: flex;
-    flex: 1;
     width: 100%;
+    box-sizing: border-box;
+    padding-inline: 2%;
     justify-content: end;
     > * {
-        zoom: 60%;
+        zoom: 100%;
         cursor: pointer;
     }
 `;

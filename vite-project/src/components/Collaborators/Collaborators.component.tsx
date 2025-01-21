@@ -9,15 +9,24 @@ import {useState} from "react";
 import {FormComponent} from "../Form";
 import {User} from "../../services/types/User.ts";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import {AssociateIconComponent} from "../../common/components";
+import {AssociateIconComponent} from "../../common/components/AssociateIcon";
+import {DispatchDialogComponent} from "../../common/components/DispatchDialog";
+import {useSmallName} from "../../common/hooks/UseSmallName.tsx";
 
 export const CollaboratorsComponent = () => {
     const {data} = useGetCollaboratorsQuery()
     const [createCollaborator] = useCreateCollaboratorMutation();
     const [deleteCollaborator] = useDeleteCollaboratorMutation();
     const [openForm, setOpenForm] = useState(false);
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [selectedUserId, setSelectedUserId] = useState<string>()
     const handleOpenForm = () => setOpenForm(true);
     const handleCloseForm = () => setOpenForm(false);
+    const handleOpenDeleteDialog = (id: string) => {
+        setOpenDeleteDialog(true);
+        setSelectedUserId(id)
+    }
+    const handleCloseDeleteDialog = () => setOpenDeleteDialog(false);
 
     const fields = {
         name: {
@@ -33,6 +42,11 @@ export const CollaboratorsComponent = () => {
         handleCloseForm();
     }
 
+    const handleDelete = async () => {
+        if(selectedUserId) await deleteCollaborator(selectedUserId);
+        handleCloseDeleteDialog();
+    }
+
     return (
         <>
             <h1>Collaborators</h1>
@@ -44,11 +58,11 @@ export const CollaboratorsComponent = () => {
                     return (
                         <Collaborator>
                             <RemoveNotch>
-                                <RemoveCircleIcon sx={{zoom: "60%", cursor: "pointer"}} color={"error"}
-                                                  onClick={() => deleteCollaborator(user.id)}/>
+                                <RemoveCircleIcon color={"error"}
+                                                  onClick={() => handleOpenDeleteDialog(user.id)}/>
                             </RemoveNotch>
-                            <AssociateIconComponent hasShadow={false} name={user.name} size={"big"} />
-                            {user.name}
+                            <AssociateIconComponent hasShadow={false} name={user.name} size={"big"}/>
+                            {useSmallName(user.name)}
                         </Collaborator>
                     )
                 })}
@@ -58,6 +72,8 @@ export const CollaboratorsComponent = () => {
                            handleSubmit={handleSubmit}
                            title={"Create Collaborator"}
                            fields={fields}/>
+            <DispatchDialogComponent open={openDeleteDialog} handleClose={handleCloseDeleteDialog}
+                                     dispatch={handleDelete}/>
         </>
     )
 }

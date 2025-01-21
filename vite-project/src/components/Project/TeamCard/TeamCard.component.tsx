@@ -5,9 +5,9 @@ import {
     TeamOwner,
     TeamInfo, TeamAssociates,
 } from "./TeamCard.styles.tsx";
-import {TeamSchemaComponent} from "./TeamSchema";
+import {TeamSchemaComponent} from "../../Teams/TeamSchema";
 import {useState} from "react";
-import {AssociateIconComponent} from "../../../common/components";
+import {AssociateIconComponent} from "../../../common/components/AssociateIcon";
 
 export const TeamCardComponent = (props: TeamCardProps) => {
     const {team} = props

@@ -1,10 +1,10 @@
 import {SchemaFragmentProps} from "./SchemaFragment.interface.tsx";
-import {BigAssociateIcon, RemoveNotch} from "../../../../../common/styles";
 import {AddCollaboratorComponent} from "../AddCollaborator";
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import {Nc} from "../TeamSchema.styles.tsx";
-import {useNameInitials} from "../../../../../common/hooks/UseNameInitials.tsx";
-import {useSmallName} from "../../../../../common/hooks/UseSmallName.tsx";
+import {BigAssociateIcon, RemoveNotch} from "../../../../common/styles";
+import {useNameInitials} from "../../../../common/hooks/UseNameInitials.tsx";
+import {useSmallName} from "../../../../common/hooks/UseSmallName.tsx";
 
 export const SchemaFragmentComponent = (props: SchemaFragmentProps) => {
     const {
@@ -43,7 +43,6 @@ export const SchemaFragmentComponent = (props: SchemaFragmentProps) => {
                 }
                 {
                     edit && (
-
                         <AddCollaboratorComponent
                             openCollaboratorOptions={openCollaboratorOptions}
                             setOpenCollaboratorOptions={setOpenCollaboratorOptions}

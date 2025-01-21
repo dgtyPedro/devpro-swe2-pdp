@@ -20,7 +20,6 @@ export const SchemaBox = styled.div`
 export const Tree = styled.div.attrs({
     className: 'tf-tree',
 })`
-    width: 100%
 `;
 
 export const Nc = styled.span.attrs({

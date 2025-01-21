@@ -1,21 +1,22 @@
 import {TeamSchemaProps} from "./TeamSchema.interface.tsx";
-import {
-    useAttachCollaboratorMutation, useDeleteTeamMutation,
-    useDetachCollaboratorMutation,
-    useGetTeamQuery
-} from "../../../../services/team.ts";
 import Backdrop from "@mui/material/Backdrop";
 import {Modal} from "@mui/base";
 import {Nc, SchemaBox, Tree} from "./TeamSchema.styles.tsx";
-import {useOutsideClick} from "../../../../common/hooks";
 import {SchemaFragmentComponent} from "./SchemaFragment";
-import {ActionBar} from "../../../../common/styles";
 import {Divider} from "@mui/material";
 import {AddCollaboratorComponent} from "./AddCollaborator";
-import {useGetCollaboratorsQuery} from "../../../../services/collaborator.ts";
 import {useState} from "react";
 import {ChooseCollaboratorComponent} from "./ChooseCollaborator";
-import {AssociateIconComponent} from "../../../../common/components";
+import {
+    useAttachCollaboratorMutation,
+    useDeleteTeamMutation,
+    useDetachCollaboratorMutation,
+    useGetTeamQuery
+} from "../../../services/team.ts";
+import {useOutsideClick} from "../../../common/hooks";
+import {useGetCollaboratorsQuery} from "../../../services/collaborator.ts";
+import {ActionBar} from "../../../common/styles";
+import {AssociateIconComponent} from "../../../common/components/AssociateIcon";
 
 export const TeamSchemaComponent = (props: TeamSchemaProps) => {
     const {id, open, handleClose} = props
@@ -74,15 +75,13 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
             slots={{backdrop: Backdrop}}
         >
             <SchemaBox ref={ref}>
-                <div>
-                    <ActionBar>
-                        <a onClick={handleClose}>Close</a>
-                        <a onClick={handleDeleteTeam}>Delete Team</a>
-                    </ActionBar>
+                <ActionBar>
+                    <a onClick={handleClose}>Close</a>
+                    <a onClick={handleDeleteTeam}>Delete Team</a>
+                </ActionBar>
 
-                    <h2>{team?.name}'s Hierarchy</h2>
-                    <Divider sx={{marginBottom: 12}}/>
-                </div>
+                <h2>{team?.name}'s Hierarchy</h2>
+                <Divider sx={{marginBottom: 2, width: "100%"}}/>
                 {
                     openCollaboratorOptions && availableCollaborators &&
                     <ChooseCollaboratorComponent collaborators={availableCollaborators}

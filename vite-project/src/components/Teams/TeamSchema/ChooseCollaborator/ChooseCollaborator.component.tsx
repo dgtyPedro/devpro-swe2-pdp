@@ -1,8 +1,8 @@
 import {ChooseCollaboratorProps} from "./ChooseCollaborator.interface.tsx";
-import {AutocompleteComponent} from "../../../../Form/Autocomplete";
 import {ChooseCollaboratorBox} from "./ChooseCollaborator.styles.tsx";
-import {Option} from "../../../../Form/Autocomplete/Autocomplete.interface.tsx";
 import {useState} from "react";
+import {Option} from "../../../Form/Autocomplete/Autocomplete.interface.tsx";
+import {AutocompleteComponent} from "../../../Form/Autocomplete";
 
 export const ChooseCollaboratorComponent = (props: ChooseCollaboratorProps) => {
     const {collaborators, handleAddCollaborator} = props

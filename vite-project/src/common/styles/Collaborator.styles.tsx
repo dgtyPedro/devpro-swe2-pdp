@@ -11,10 +11,10 @@ export const AssociatesPreview = styled.div`
 `;
 
 export const AssociateIcon = styled.div`
-    height: 20px;
-    width: 20px;
+    height: 30px;
+    width: 30px;
     padding: 1px;
-    font-size: 0.8em;
+    font-size: 1em;
     background-color: #62bb46;
     border: 1px solid white;
     box-shadow: 0 .1rem .8rem rgba(0, 0, 0, 0.2);
@@ -26,10 +26,10 @@ export const AssociateIcon = styled.div`
 `;
 
 export const SmallAssociateIcon = styled.div`
-    height: 10px;
-    width: 10px;
+    height: 25px;
+    width: 25px;
     padding: 1px;
-    font-size: 0.5em;
+    font-size: 0.8em;
     background-color: #62bb46;
     border: 1px solid white;
     color: white;
@@ -40,10 +40,10 @@ export const SmallAssociateIcon = styled.div`
 `;
 
 export const BigAssociateIcon = styled.div`
-    height: 40px;
-    width: 40px;
+    height: 50px;
+    width: 50px;
     padding: 1px;
-    font-size: 1.2em;
+    font-size: 1.6em;
     background-color: #62bb46;
     border: 1px solid white;
     color: white;

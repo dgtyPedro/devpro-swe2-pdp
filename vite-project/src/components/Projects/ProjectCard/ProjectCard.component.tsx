@@ -7,7 +7,7 @@ import {
 } from "./ProjectCard.styles.tsx";
 import {AssociatesPreview} from "../../../common/styles";
 import {useNavigate} from "react-router";
-import {AssociateIconComponent} from "../../../common/components";
+import {AssociateIconComponent} from "../../../common/components/AssociateIcon";
 
 export const ProjectCardComponent = (props: ProjectCardProps) => {
     const {project} = props
@@ -37,7 +37,7 @@ export const ProjectCardComponent = (props: ProjectCardProps) => {
             <AssociatesPreview>
                 {associates.map(associate => {
                     return (
-                        <AssociateIconComponent hasShadow name={associate.name} />
+                        <AssociateIconComponent hasShadow name={associate.name} size={"small"}/>
                 )
                 }).slice(0, 4)}
                 {associates.length > 4 && (

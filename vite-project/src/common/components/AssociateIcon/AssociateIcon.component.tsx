@@ -1,6 +1,6 @@
-import { AssociateIconProps } from "./AssociateIcon.interface";
-import { AssociateIcon, BigAssociateIcon, SmallAssociateIcon } from "../styles";
-import { useNameInitials } from "../hooks/UseNameInitials.tsx";
+import { AssociateIconProps } from "./AssociateIcon.interface.tsx";
+import { AssociateIcon, BigAssociateIcon, SmallAssociateIcon } from "../../styles";
+import { useNameInitials } from "../../hooks/UseNameInitials.tsx";
 import React from "react";
 
 type Size = "default" | "big" | "small";
