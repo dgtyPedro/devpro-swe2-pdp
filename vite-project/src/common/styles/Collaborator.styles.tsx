@@ -15,7 +15,7 @@ export const AssociateIcon = styled.div`
     width: 30px;
     padding: 1px;
     font-size: 1em;
-    background-color: #62bb46;
+    background-color: #00a1e0;
     border: 1px solid white;
     box-shadow: 0 .1rem .8rem rgba(0, 0, 0, 0.2);
     color: white;
@@ -30,7 +30,8 @@ export const SmallAssociateIcon = styled.div`
     width: 25px;
     padding: 1px;
     font-size: 0.8em;
-    background-color: #62bb46;
+    background-color: #00a1e0;
+    box-shadow: 0 .1rem .8rem rgba(0, 0, 0, 0.2);
     border: 1px solid white;
     color: white;
     border-radius: 50%;
@@ -44,8 +45,9 @@ export const BigAssociateIcon = styled.div`
     width: 50px;
     padding: 1px;
     font-size: 1.6em;
-    background-color: #62bb46;
-    border: 1px solid white;
+    background-color: #00a1e0;
+    box-shadow: 0 .1rem .8rem rgba(0, 0, 0, 0.2);
+    border: 2px solid white;
     color: white;
     border-radius: 50%;
     display: flex;

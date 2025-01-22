@@ -25,26 +25,24 @@ export const TeamCardComponent = (props: TeamCardProps) => {
                     </TeamName>
                     <TeamOwner>
                         <p>Team Leader:</p>
-                        <AssociateIconComponent hasShadow={false} name={team.owner.name} />
+                        <AssociateIconComponent hasShadow name={team.owner.name}/>
                         {team.owner.name}
                     </TeamOwner>
-                    <div>
-                        <TeamAssociates>
-                            <p>Collaborators:</p>
-                            {
-                                team.associates.map(associate => {
-                                    return (
-                                        <AssociateIconComponent name={associate.name} hasShadow={false}/>
-                                    )
-                                }).slice(0, 10)
-                            }
-                            {team.associates.length > 10 && (
-                                <div>
-                                    and <b>{team.associates.length - 10}</b> more
-                                </div>
-                            )}
-                        </TeamAssociates>
-                    </div>
+                    <TeamAssociates>
+                        <span>Collaborators:</span>
+                        {
+                            team.associates.map(associate => {
+                                return (
+                                    <AssociateIconComponent name={associate.name} hasShadow/>
+                                )
+                            }).slice(0, 10)
+                        }
+                        {team.associates.length > 10 && (
+                            <div>
+                                and <b>{team.associates.length - 10}</b> more
+                            </div>
+                        )}
+                    </TeamAssociates>
                 </TeamInfo>
             </TeamBox>
             <TeamSchemaComponent id={team.id} open={openSchema} handleClose={handleCloseSchema}/>

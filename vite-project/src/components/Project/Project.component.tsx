@@ -10,6 +10,7 @@ import {Project} from "../../services/types/Project.ts";
 import {useGetCollaboratorsQuery} from "../../services/collaborator.ts";
 import {Data} from "../Form/Form.interface.tsx";
 import {useCreateTeamMutation} from "../../services/team.ts";
+import {DispatchDialogComponent} from "../../common/components/DispatchDialog";
 
 export const ProjectComponent = () => {
     const {id} = useParams() as unknown as Project;
@@ -17,10 +18,14 @@ export const ProjectComponent = () => {
     const {data: collaborators} = useGetCollaboratorsQuery()
     const [createTeam] = useCreateTeamMutation();
     const [deleteProject] = useDeleteProjectMutation();
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const navigate = useNavigate();
     const [openForm, setOpenForm] = useState(false);
     const handleOpenForm = () => setOpenForm(true);
     const handleCloseForm = () => setOpenForm(false);
+    const handleOpenDeleteDialog = () => setOpenDeleteDialog(true);
+    const handleCloseDeleteDialog = () => setOpenDeleteDialog(false);
+
     const collaboratorsOptions = collaborators?.map(collaborator => {
         return (
             {
@@ -65,7 +70,7 @@ export const ProjectComponent = () => {
             <h1>{project?.name}</h1>
             <ActionBar>
                 <a onClick={handleOpenForm}>Create Team</a>
-                <a onClick={() => handleDelete()}>Delete Project</a>
+                <a onClick={handleOpenDeleteDialog}>Delete Project</a>
             </ActionBar>
             <Divider/>
             <h4>Project Owner: {project?.owner.name}</h4>
@@ -80,6 +85,8 @@ export const ProjectComponent = () => {
                            handleSubmit={handleSubmit}
                            title={"Create Team"}
                            fields={fields}/>
+            <DispatchDialogComponent open={openDeleteDialog} handleClose={handleCloseDeleteDialog}
+                                     dispatch={handleDelete}/>
         </>
     );
 }

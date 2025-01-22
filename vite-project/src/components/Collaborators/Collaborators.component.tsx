@@ -61,7 +61,7 @@ export const CollaboratorsComponent = () => {
                                 <RemoveCircleIcon color={"error"}
                                                   onClick={() => handleOpenDeleteDialog(user.id)}/>
                             </RemoveNotch>
-                            <AssociateIconComponent hasShadow={false} name={user.name} size={"big"}/>
+                            <AssociateIconComponent hasShadow name={user.name} size={"big"}/>
                             {useSmallName(user.name)}
                         </Collaborator>
                     )

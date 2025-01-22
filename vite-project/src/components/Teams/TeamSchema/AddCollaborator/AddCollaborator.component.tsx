@@ -1,5 +1,7 @@
 import {AddCollaboratorProps} from "./AddCollaborator.interface.tsx";
 import {useEffect, useState} from "react";
+import {AddButton} from "./AddCollaborator.styles.tsx";
+import {Nc} from "../TeamSchema.styles.tsx";
 
 export const AddCollaboratorComponent = (props: AddCollaboratorProps) => {
     const {openCollaboratorOptions, setOpenCollaboratorOptions, depth, editDepth, setEditDepth} = props
@@ -21,12 +23,12 @@ export const AddCollaboratorComponent = (props: AddCollaboratorProps) => {
 
     return (
         <li>
-            <span className="tf-nc">
-                <button disabled={disabled} onClick={handleButton}>{
+            <Nc>
+                <AddButton disabled={disabled} onClick={handleButton}>{
                     editDepth === depth && inputMode ? "Selecting... (Click to close)" : "Add Collaborator"
                 }
-                </button>
-            </span>
+                </AddButton>
+            </Nc>
         </li>
     )
 }

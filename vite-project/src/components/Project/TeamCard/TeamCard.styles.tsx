@@ -11,7 +11,6 @@ export const TeamBox = styled.div`
 export const TeamInfo = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 10px 0;
     padding: 10px;
 `;
 

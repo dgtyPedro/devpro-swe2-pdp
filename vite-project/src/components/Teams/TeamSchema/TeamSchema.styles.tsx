@@ -18,15 +18,15 @@ export const SchemaBox = styled.div`
 `;
 
 export const Tree = styled.div.attrs({
-    className: 'tf-tree',
+    className: 'tf-tree tf-custom',
 })`
 `;
 
 export const Nc = styled.span.attrs({
     className: 'tf-nc',
 })`
-    display: flex;
+    display: flex!important;
     flex-direction: column;
     align-items: center;
-    text-align: center
+    text-align: center;
 `;

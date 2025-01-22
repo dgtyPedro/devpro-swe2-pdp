@@ -6,6 +6,7 @@ export const ActionBar = styled.div`
     justify-content: space-between;
     gap: 10px;
     margin-bottom: 10px;
+    width: 100%;
 `;
 
 export const RemoveNotch = styled.div`
@@ -15,7 +16,7 @@ export const RemoveNotch = styled.div`
     padding-inline: 2%;
     justify-content: end;
     > * {
-        zoom: 100%;
+        zoom: 70%;
         cursor: pointer;
     }
 `;
