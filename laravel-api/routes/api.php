@@ -16,3 +16,6 @@ Route::apiResource('projects', ProjectController::class);
 
 Route::put('/teams/{id}/attachCollaborator', [TeamController::class, 'attachCollaborator']);
 Route::put('/teams/{id}/detachCollaborator', [TeamController::class, 'detachCollaborator']);
+
+Route::post('signup', [UserController::class, 'signUp']);
+Route::post('auth', [UserController::class, 'signIn']);

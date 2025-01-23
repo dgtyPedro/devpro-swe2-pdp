@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const LoginBox = styled.div`
+export const SignUpBox = styled.div`
     position: absolute;
     top: 45%;
     left: 50%;
@@ -17,7 +17,7 @@ export const LoginBox = styled.div`
     justify-content: center;
 `;
 
-export const LoginFields = styled.form`
+export const SignUpFields = styled.form`
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -26,14 +26,14 @@ export const LoginFields = styled.form`
     align-items: end;
 `;
 
-export const LoginGroup = styled.div`
+export const SignUpGroup = styled.div`
   position: relative;
   padding: 15px 0 0;
   margin-top: 10px;
   width: 100%;
 `;
 
-export const LoginField = styled.input`
+export const SignUpField = styled.input`
   font-family: inherit;
   width: 100%;
   border: 0;

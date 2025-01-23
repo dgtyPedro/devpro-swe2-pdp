@@ -3,6 +3,7 @@ import {Dropdown, Menu, MenuButton, MenuItem} from "@mui/base";
 import {useLocation, useNavigate} from "react-router";
 import {useState} from "react";
 import {LoginComponent} from "../Login";
+import {SignUpComponent} from "../SignUp";
 
 export const HeaderComponent = () => {
     const navigate = useNavigate();
@@ -11,6 +12,10 @@ export const HeaderComponent = () => {
     const [openLogin, setOpenLogin] = useState(false);
     const handleOpenLogin = () => setOpenLogin(true);
     const handleCloseLogin = () => setOpenLogin(false);
+
+    const [openSignUp, setOpenSignUp] = useState(false);
+    const handleOpenSignUp = () => setOpenSignUp(true);
+    const handleCloseSignUp = () => setOpenSignUp(false);
 
     const checkRouteActive = (route: string) => {
         return location.pathname.includes(route)
@@ -51,6 +56,9 @@ export const HeaderComponent = () => {
                 <Item onClick={handleOpenLogin}>
                     Sign In
                 </Item>
+                <Item onClick={handleOpenSignUp}>
+                    Sign Up
+                </Item>
             </DesktopNav>
             <MobileNav>
             <Dropdown>
@@ -71,6 +79,7 @@ export const HeaderComponent = () => {
                 </Dropdown>
             </MobileNav>
             <LoginComponent open={openLogin} handleClose={handleCloseLogin}/>
+            <SignUpComponent open={openSignUp} handleClose={handleCloseSignUp}/>
         </Header>
     )
 }

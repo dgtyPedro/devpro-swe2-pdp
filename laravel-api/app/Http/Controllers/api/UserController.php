@@ -8,7 +8,11 @@ use App\Models\Team;
 use App\Models\User;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
-use function PHPUnit\Framework\throwException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends Controller
 {
@@ -83,5 +87,64 @@ class UserController extends Controller
 
         $user->delete();
         return response()->make([], 204);
+    }
+
+    public function signUp(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users,email|max:255',
+            'password' => 'required|min:8|confirmed', // password_confirmation
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $role = Role::where("name", "ONBOARDING")->first();
+
+        $user = User::create([
+            'id' => uuid_create(),
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role_id' => $role->id,
+        ]);
+
+        $token = JWTAuth::fromUser($user);
+
+        return response()->json([
+            'message' => 'User successfully registered',
+            'user' => $user,
+            'token' => $token,
+        ], Response::HTTP_CREATED);
+    }
+
+    public function signIn(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        $validator = Validator::make($credentials, [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        if (!$token = JWTAuth::attempt($credentials)) {
+            return response()->json(['message' => 'Invalid credentials'], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $user = Auth::user();
+
+        $user->load('role.permission');
+
+        return response()->json([
+            'message' => 'User successfully logged in',
+            'user' => $user,
+            'token' => $token,
+        ], Response::HTTP_OK);
     }
 }

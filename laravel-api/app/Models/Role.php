@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Role extends Model
 {
@@ -18,4 +20,9 @@ class Role extends Model
 
     protected $keyType = 'string';
     public $incrementing = false;
+
+    public function permission(): HasOne
+    {
+        return $this->hasOne(Permission::class);
+    }
 }
