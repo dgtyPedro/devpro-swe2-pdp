@@ -24,7 +24,7 @@ export const projectApi = createApi({
                 method: 'POST',
                 body: project,
             }),
-            invalidatesTags: ['Project']
+            invalidatesTags: ['Project'],
         }),
         uploadProject: builder.mutation<Project, Partial<Project>>({
             query: (project) => ({

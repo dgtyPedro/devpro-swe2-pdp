@@ -40,16 +40,16 @@ body {
 
 .tf-custom .tf-nc {
     border-color: #001D29;
-    border-width: 2px;
+    border-width: 1px;
 }
 
 .tf-custom .tf-nc:before,
 .tf-custom .tf-nc:after {
     border-left-color: #001D29;
-    border-left-width: 2px;
+    border-left-width: 1px;
 }
 
 .tf-custom li li:before {
     border-top-color: #001D29;
-    border-top-width: 2px;
+    border-top-width: 1px;
 }

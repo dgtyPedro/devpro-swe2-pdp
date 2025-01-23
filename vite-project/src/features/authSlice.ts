@@ -1,14 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../app/store';
+import {User} from "../services/types/User.ts";
 
 interface AuthState {
-    user: string | null;
+    user: User | null;
     token: string | null;
 }
 
 const initialState: AuthState = {
-    user: null,
-    token: null,
+    user: JSON.parse(localStorage.getItem('user') || 'null'),
+    token: localStorage.getItem('token') || null,
 };
 
 const authSlice = createSlice({
@@ -23,6 +24,8 @@ const authSlice = createSlice({
         logout: (state) => {
             state.user = null;
             state.token = null;
+            localStorage.removeItem('user');
+            localStorage.removeItem('token');
         },
     },
 });

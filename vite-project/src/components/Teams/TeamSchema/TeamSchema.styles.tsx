@@ -7,12 +7,11 @@ export const SchemaBox = styled.div`
     transform: translate(-50%, -50%);
     width: 90vw;
     overflow: scroll;
-    border: 2px solid #62bb46;
+    border: 2px solid #f58220;
     background-color: white;
     display: flex;
     flex-direction: column;
     padding: 20px;
-    box-shadow: 0 0 100px 0 rgb(98, 187, 70, 0.5);
     justify-content: center;
     align-items: center;
 `;

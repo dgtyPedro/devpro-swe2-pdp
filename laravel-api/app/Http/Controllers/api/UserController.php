@@ -54,7 +54,10 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->load('role.permission', 'teams', 'owns', 'leads');
+
+        return $user;
     }
 
     /**
@@ -62,7 +65,35 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|unique:users,email,' . $user->id, // Verifica email único ignorando o atual
+            'name' => 'required|string|max:255',
+            'password' => 'nullable|string|min:8|confirmed', // Senha opcional, mas requer confirmação se enviada
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $user->email = $request->input('email');
+        $user->name = $request->input('name');
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->input('password'));
+        }
+
+        $user->save();
+
+        return response()->json([
+            'message' => 'User updated successfully',
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -111,6 +142,8 @@ class UserController extends Controller
             'role_id' => $role->id,
         ]);
 
+        $user->load('role.permission', 'teams', 'owns', 'leads');
+
         $token = JWTAuth::fromUser($user);
 
         return response()->json([
@@ -139,7 +172,7 @@ class UserController extends Controller
 
         $user = Auth::user();
 
-        $user->load('role.permission');
+        $user->load('role.permission', 'teams', 'owns', 'leads');
 
         return response()->json([
             'message' => 'User successfully logged in',

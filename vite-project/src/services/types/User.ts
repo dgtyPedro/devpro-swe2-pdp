@@ -1,3 +1,6 @@
+import {Team} from "./Team.ts";
+import {Project} from "./Project.ts";
+
 export interface User {
     id: string;
     email: string;
@@ -5,6 +8,9 @@ export interface User {
     role_id: string;
     created_at: string;
     updated_at: string;
+    leads: Team[];
+    owns: Project[];
+    teams: Team[];
 }
 
 

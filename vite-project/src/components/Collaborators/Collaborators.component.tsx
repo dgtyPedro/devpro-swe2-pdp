@@ -12,11 +12,13 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import {AssociateIconComponent} from "../../common/components/AssociateIcon";
 import {DispatchDialogComponent} from "../../common/components/DispatchDialog";
 import {useSmallName} from "../../common/hooks/UseSmallName.tsx";
+import {useNavigate} from "react-router";
 
 export const CollaboratorsComponent = () => {
     const {data} = useGetCollaboratorsQuery()
     const [createCollaborator] = useCreateCollaboratorMutation();
     const [deleteCollaborator] = useDeleteCollaboratorMutation();
+    const navigate = useNavigate();
     const [openForm, setOpenForm] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState<string>()
@@ -47,6 +49,10 @@ export const CollaboratorsComponent = () => {
         handleCloseDeleteDialog();
     }
 
+    const GetSmallName = (name: string) => {
+        return useSmallName(name);
+    }
+
     return (
         <>
             <h1>Collaborators</h1>
@@ -56,13 +62,13 @@ export const CollaboratorsComponent = () => {
             <CollaboratorsGrid>
                 {data?.map(user => {
                     return (
-                        <Collaborator>
+                        <Collaborator onClick={() => navigate(`/collaborators/${user.id}`)}>
                             <RemoveNotch>
                                 <RemoveCircleIcon color={"error"}
                                                   onClick={() => handleOpenDeleteDialog(user.id)}/>
                             </RemoveNotch>
                             <AssociateIconComponent hasShadow name={user.name} size={"big"}/>
-                            {useSmallName(user.name)}
+                            {GetSmallName(user.name)}
                         </Collaborator>
                     )
                 })}

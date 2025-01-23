@@ -4,8 +4,13 @@ import {useLocation, useNavigate} from "react-router";
 import {useState} from "react";
 import {LoginComponent} from "../Login";
 import {SignUpComponent} from "../SignUp";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../app/store.ts";
+import {logout} from "../../features/authSlice.ts";
 
 export const HeaderComponent = () => {
+    const token = useSelector((state: RootState) => state.auth.token);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -21,6 +26,11 @@ export const HeaderComponent = () => {
         return location.pathname.includes(route)
     }
 
+    const handleLogout = () => {
+        dispatch(logout());
+        window.location.href = '/about';
+    };
+
     checkRouteActive("");
 
     return (
@@ -30,38 +40,55 @@ export const HeaderComponent = () => {
             </Logo>
             <DesktopNav>
                 <Item style={
-                    checkRouteActive("projects") ? {
-                        fontWeight: "1000"
-                    } : {}
-                } onClick={() => navigate("/projects")}>
-                    Projects
-                </Item>
-                {/*<Item onClick={() => navigate("/teams")}>*/}
-                {/*    Teams*/}
-                {/*</Item>*/}
-                <Item style={
-                    checkRouteActive("collaborators") ? {
-                        fontWeight: "1000"
-                    } : {}
-                } onClick={() => navigate("/collaborators")}>
-                    Collaborators
-                </Item>
-                <Item style={
                     checkRouteActive("about") ? {
                         fontWeight: "1000"
                     } : {}
                 } onClick={() => navigate("/about")}>
                     About
                 </Item>
-                <Item onClick={handleOpenLogin}>
-                    Sign In
-                </Item>
-                <Item onClick={handleOpenSignUp}>
-                    Sign Up
-                </Item>
+                {
+                    token ? (
+                        <>
+
+                            <Item style={
+                                checkRouteActive("collaborators") ? {
+                                    fontWeight: "1000"
+                                } : {}
+                            } onClick={() => navigate("/collaborators")}>
+                                Collaborators
+                            </Item>
+                            <Item style={
+                                checkRouteActive("projects") ? {
+                                    fontWeight: "1000"
+                                } : {}
+                            } onClick={() => navigate("/projects")}>
+                                Projects
+                            </Item>
+                            <Item style={
+                                checkRouteActive("profile") ? {
+                                    fontWeight: "1000"
+                                } : {}
+                            } onClick={() => navigate("/profile")}>
+                                Profile
+                            </Item>
+                            <Item onClick={handleLogout}>
+                                Log Out
+                            </Item>
+                        </>
+                    ) : (
+                        <>
+                            <Item onClick={handleOpenLogin}>
+                                Sign In
+                            </Item>
+                            <Item onClick={handleOpenSignUp}>
+                                Sign Up
+                            </Item>
+                        </>
+                    )
+                }
             </DesktopNav>
             <MobileNav>
-            <Dropdown>
+                <Dropdown>
                     <MenuButton>[]</MenuButton>
                     <Menu>
                         <MenuItem>Project</MenuItem>

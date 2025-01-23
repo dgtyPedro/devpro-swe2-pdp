@@ -12,9 +12,15 @@ export const Collaborator = styled.div`
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    border: 1px solid #62bb46;
+    border: 1px solid #00a1e0;
     padding: 5px 0 5px;
-    box-shadow: 0 .1rem .8rem rgba(0, 0, 0, 0.05) !important;
+    box-shadow: 0 0.1rem 0.8rem rgba(0, 0, 0, 0.05) !important;
     gap: 5px;
     text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out; 
+
+    &:hover {
+        transform: scale(1.05); 
+    }
 `;

@@ -2,10 +2,15 @@ import styled from "styled-components";
 
 export const TeamBox = styled.div`
     display: block;
-    border: 1px solid #00a1e0;
+    border: 1px solid #f58220;
     box-shadow: 0 .1rem .8rem rgba(0, 0, 0, 0.05) !important;
     cursor: pointer;
     //border-radius: 6px;
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+        transform: scale(1.01);
+    }
 `;
 
 export const TeamInfo = styled.div`

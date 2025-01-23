@@ -7,6 +7,11 @@ export const ProjectBox = styled.div`
     cursor: pointer;
     flex-direction: column;
     //border-radius: 6px;
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+        transform: scale(1.01);
+    }
 `;
 
 export const ProjectInfo = styled.div`

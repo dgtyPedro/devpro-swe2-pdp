@@ -17,6 +17,10 @@ export const collaboratorApi = createApi({
             query: () => `collaborators`,
             providesTags: ['Collaborator']
         }),
+        getCollaborator: builder.query<User, string>({
+            query: (id) => `collaborators/${id}`,
+            providesTags: ['Collaborator'],
+        }),
         createCollaborator: builder.mutation<void, Partial<User>>({
             query: (newCollaborator) => ({
                 url: 'collaborators',
@@ -25,7 +29,7 @@ export const collaboratorApi = createApi({
             }),
             invalidatesTags: ['Collaborator'],
         }),
-        uploadCollaborator: builder.mutation<User, Partial<User>>({
+        updateCollaborator: builder.mutation<User, Partial<User>>({
             query: (collaborator) => ({
                 url: 'collaborators/' + collaborator.id,
                 method: 'PUT',
@@ -60,8 +64,9 @@ export const collaboratorApi = createApi({
 
 export const {
     useGetCollaboratorsQuery,
+    useGetCollaboratorQuery,
     useCreateCollaboratorMutation,
-    useUploadCollaboratorMutation,
+    useUpdateCollaboratorMutation,
     useDeleteCollaboratorMutation,
     useSignUpMutation,
     useSignInMutation
@@ -77,6 +82,7 @@ export const handleSignIn = async (
         const response = await signIn(user).unwrap();
         dispatch(setCredentials({ user: response.user, token: response.token }));
         localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(response.user));
         return true
         /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
     } catch (err) {
@@ -95,6 +101,7 @@ export const handleSignUp = async (
         const response = await signUp(user).unwrap();
         dispatch(setCredentials({ user: response.user, token: response.token }));
         localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(response.user));
         return true
         /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
     } catch (err) {
