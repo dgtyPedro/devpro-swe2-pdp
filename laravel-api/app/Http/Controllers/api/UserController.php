@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -72,17 +73,19 @@ class UserController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email|unique:users,email,' . $user->id, // Verifica email único ignorando o atual
-            'name' => 'required|string|max:255',
-            'password' => 'nullable|string|min:8|confirmed', // Senha opcional, mas requer confirmação se enviada
+            'email' => 'email|unique:users,email,' . $user->id,
+            'name' => 'string|max:255',
+            'password' => 'nullable|string|min:8|confirmed',
+            'role_id' => 'exists:roles,id'
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $user->email = $request->input('email');
-        $user->name = $request->input('name');
+        if ($request->input('email')) $user->email = $request->input('email');
+        if ($request->input('name')) $user->name = $request->input('name');
+        if ($request->input('role_id')) $user->role_id = $request->input('role_id');
 
         if ($request->filled('password')) {
             $user->password = Hash::make($request->input('password'));
@@ -179,5 +182,18 @@ class UserController extends Controller
             'user' => $user,
             'token' => $token,
         ], Response::HTTP_OK);
+    }
+
+
+    public function refreshToken(): JsonResponse
+    {
+        try {
+            $newToken = JWTAuth::parseToken()->refresh();
+            return response()->json([
+                'token' => $newToken
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Invalid Token'], 401);
+        }
     }
 }
