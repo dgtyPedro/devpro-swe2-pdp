@@ -1,13 +1,10 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
+import {createApi} from '@reduxjs/toolkit/query/react'
 import {Project} from "./types/Project.ts";
+import {baseQueryWithAuth} from "./baseQuery.ts";
 
 export const projectApi = createApi({
     reducerPath: 'projectApi',
-    baseQuery: fetchBaseQuery(
-        {
-            baseUrl: 'http://127.0.0.1:8000/api/'
-        }
-    ),
+    baseQuery: baseQueryWithAuth,
     tagTypes: ['Project'],
     endpoints: (builder) => ({
         getProjects: builder.query<Project[], void>({

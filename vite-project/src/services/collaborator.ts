@@ -1,18 +1,18 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
-import {AuthUser, JWTUser, SignUpUser, User} from "./types/User.ts";
+import {createApi} from '@reduxjs/toolkit/query/react'
+import {AuthUser, JWTUser, Role, SignUpUser, User} from "./types/User.ts";
 import {setCredentials} from "../features/authSlice.ts";
 import {AppDispatch} from "../app/store.ts";
+import {baseQueryWithAuth} from "./baseQuery.ts";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const collaboratorApi = createApi({
     reducerPath: 'collaboratorApi',
-    baseQuery: fetchBaseQuery(
-        {
-            baseUrl: 'http://127.0.0.1:8000/api/'
-        }
-    ),
+    baseQuery: baseQueryWithAuth,
     tagTypes: ['Collaborator'],
     endpoints: (builder) => ({
+        getRoles: builder.query<Role[], void>({
+            query: () => `roles`,
+        }),
         getCollaborators: builder.query<User[], void>({
             query: () => `collaborators`,
             providesTags: ['Collaborator']
@@ -63,6 +63,7 @@ export const collaboratorApi = createApi({
 })
 
 export const {
+    useGetRolesQuery,
     useGetCollaboratorsQuery,
     useGetCollaboratorQuery,
     useCreateCollaboratorMutation,
@@ -83,6 +84,8 @@ export const handleSignIn = async (
         dispatch(setCredentials({ user: response.user, token: response.token }));
         localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify(response.user));
+        localStorage.setItem('permission', JSON.stringify(response.user.role.permission));
+        showToast(`Hi ${response.user.name}!`, 'info');
         return true
         /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
     } catch (err) {
@@ -102,6 +105,8 @@ export const handleSignUp = async (
         dispatch(setCredentials({ user: response.user, token: response.token }));
         localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify(response.user));
+        localStorage.setItem('permission', JSON.stringify(response.user.role.permission));
+        showToast(`Welcome ${response.user.name}!`, 'info');
         return true
         /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
     } catch (err) {

@@ -29,7 +29,13 @@ export const TeamCardComponent = (props: TeamCardProps) => {
                         {team.owner.name}
                     </TeamOwner>
                     <TeamAssociates>
-                        <span>Collaborators:</span>
+                        <span>
+                            Collaborators: {
+                                team.associates.length === 0 && (
+                                    <>There are no associates in this team.</>
+                                )
+                            }
+                        </span>
                         {
                             team.associates.map(associate => {
                                 return (

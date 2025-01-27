@@ -8,14 +8,18 @@ import {FormComponent} from "../Form";
 import {useGetCollaboratorsQuery} from "../../services/collaborator.ts";
 import {Data} from "../Form/Form.interface.tsx";
 import {LoadingComponent} from "../Loading";
+import {useSelector} from "react-redux";
+import {RootState} from "../../app/store.ts";
 
 export const ProjectsComponent = () => {
-    const {data} = useGetProjectsQuery()
+    const {data, isLoading: queryLoading} = useGetProjectsQuery()
     const {data: collaborators} = useGetCollaboratorsQuery()
-    const [createProject, {isLoading}] = useCreateProjectMutation()
+    const [createProject, {isLoading: mutationLoading}] = useCreateProjectMutation()
+    const permission = useSelector((state: RootState) => state.auth.permission);
     const [openForm, setOpenForm] = useState(false);
     const handleOpenForm = () => setOpenForm(true);
     const handleCloseForm = () => setOpenForm(false);
+    const isLoading = queryLoading || mutationLoading
     const collaboratorsOptions = collaborators?.map(collaborator => {
         return (
             {
@@ -46,16 +50,28 @@ export const ProjectsComponent = () => {
         handleCloseForm()
     }
 
+    const renderActionBar = () => {
+        if (!permission || !permission["create-teams"]) return;
+        return (
+            <ActionBar>
+                <a onClick={handleOpenForm}>Create Project</a>
+            </ActionBar>
+        )
+    }
+
     if (isLoading) {
-        return <LoadingComponent/>
+        return (
+            <>
+                <h1>Projects</h1>
+                <LoadingComponent/>
+            </>
+        )
     }
 
     return (
         <>
             <h1>Projects</h1>
-            <ActionBar>
-                <a onClick={handleOpenForm}>Create Project</a>
-            </ActionBar>
+            {renderActionBar()}
             <ProjectGrid>
                 {data?.map((project: Project) => {
                     return (

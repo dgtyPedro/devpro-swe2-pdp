@@ -12,19 +12,19 @@ export const ProfileForm = styled.form`
     justify-content: center;
     align-items: center;
     flex: 1;
-    gap: 10px;
+    gap: 15px;
     padding-inline: 20px;
 `
 
 export const ProfileInput = styled.input`
-    font-size: 1.2em;
+    font-size: 1em;
     padding: 5px 10px;
     width: 100%;
     outline: none;
     background: #FFFFFF;
     color: #000000;
-    border: 1px solid #0075A3;
-    box-shadow: 0 .1rem .2rem rgba(0, 0, 0, 0.1);
+    border: 0;
+    border-bottom: 1px solid #0075A3;
     box-sizing: border-box;
 `;
 

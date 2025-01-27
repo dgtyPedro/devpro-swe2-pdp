@@ -8,7 +8,6 @@ import React from "react";
 import {ToastProvider} from "./common/hooks/Toast/toast.provider.tsx";
 
 function App({render}: { render: React.ReactNode }) {
-
     return (
         <Provider store={store}>
             <ToastProvider>

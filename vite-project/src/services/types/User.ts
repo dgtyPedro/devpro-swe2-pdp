@@ -1,5 +1,6 @@
 import {Team} from "./Team.ts";
 import {Project} from "./Project.ts";
+import {Permission} from "./Permission.ts";
 
 export interface User {
     id: string;
@@ -11,8 +12,15 @@ export interface User {
     leads: Team[];
     owns: Project[];
     teams: Team[];
+    role: Role;
 }
 
+export interface Role {
+    id: string;
+    name: string;
+    description: string;
+    permission: Permission
+}
 
 export interface AuthUser extends Partial<User> {
     password: string

@@ -14,6 +14,7 @@ export const SchemaBox = styled.div`
     padding: 20px;
     justify-content: center;
     align-items: center;
+    max-height: 90vh;
 `;
 
 export const Tree = styled.div.attrs({
