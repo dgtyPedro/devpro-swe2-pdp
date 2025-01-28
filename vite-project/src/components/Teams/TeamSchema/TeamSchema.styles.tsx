@@ -15,11 +15,15 @@ export const SchemaBox = styled.div`
     justify-content: center;
     align-items: center;
     max-height: 90vh;
+    box-sizing: border-box;
 `;
 
 export const Tree = styled.div.attrs({
     className: 'tf-tree tf-custom',
 })`
+    @media screen and (max-width: 800px) {
+       width: 100%;
+    }
 `;
 
 export const Nc = styled.span.attrs({

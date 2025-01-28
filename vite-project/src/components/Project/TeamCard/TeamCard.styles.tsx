@@ -11,6 +11,10 @@ export const TeamBox = styled.div`
     &:hover {
         transform: scale(1.01);
     }
+
+    @media screen and (max-width: 800px) {
+        width: 100%;
+    }
 `;
 
 export const TeamInfo = styled.div`

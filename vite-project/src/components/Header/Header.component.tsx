@@ -1,5 +1,4 @@
-import {DesktopNav, Header, Item, MobileNav, Logo} from "./Header.styles.tsx";
-import {Dropdown, Menu, MenuButton, MenuItem} from "@mui/base";
+import {DesktopNav, Header, Item, MobileNav, Logo, MobileItem} from "./Header.styles.tsx";
 import {useLocation, useNavigate} from "react-router";
 import {useState} from "react";
 import {LoginComponent} from "../Login";
@@ -92,22 +91,52 @@ export const HeaderComponent = () => {
                 }
             </DesktopNav>
             <MobileNav>
-                <Dropdown>
-                    <MenuButton>[]</MenuButton>
-                    <Menu>
-                        <MenuItem>Project</MenuItem>
-                        <MenuItem>
-                            Teams
-                        </MenuItem>
-                        <MenuItem>
-                            Collaborators
-                        </MenuItem>
-                        <MenuItem>
-                            About
-                        </MenuItem>
-                        <MenuItem>Log out</MenuItem>
-                    </Menu>
-                </Dropdown>
+                <MobileItem style={
+                    checkRouteActive("about") ? {
+                        fontWeight: "1000"
+                    } : {}
+                } onClick={() => navigate("/about")}>
+                    About
+                </MobileItem>
+                {
+                    token ? (
+                        <>
+                            <MobileItem style={
+                                checkRouteActive("collaborators") ? {
+                                    fontWeight: "1000"
+                                } : {}
+                            } onClick={() => navigate("/collaborators")}>
+                                Collaborators
+                            </MobileItem>
+                            <MobileItem style={
+                                checkRouteActive("projects") ? {
+                                    fontWeight: "1000"
+                                } : {}
+                            } onClick={() => navigate("/projects")}>
+                                Projects
+                            </MobileItem>
+                            <MobileItem style={
+                                checkRouteActive("profile") ? {
+                                    fontWeight: "1000"
+                                } : {}
+                            } onClick={() => navigate("/profile")}>
+                                Profile
+                            </MobileItem>
+                            <MobileItem onClick={handleLogout}>
+                                Log Out
+                            </MobileItem>
+                        </>
+                    ) : (
+                        <>
+                            <MobileItem onClick={handleOpenLogin}>
+                                Sign In
+                            </MobileItem>
+                            <MobileItem onClick={handleOpenSignUp}>
+                                Sign Up
+                            </MobileItem>
+                        </>
+                    )
+                }
             </MobileNav>
             <LoginComponent open={openLogin} handleClose={handleCloseLogin}/>
             <SignUpComponent open={openSignUp} handleClose={handleCloseSignUp}/>

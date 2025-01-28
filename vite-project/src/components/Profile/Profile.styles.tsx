@@ -4,6 +4,9 @@ export const ProfileBox = styled.div`
     display: flex;
     flex: 1;
     gap: 10px;
+    @media screen and (max-width: 800px) {
+        flex-direction: column-reverse;
+    }
 `;
 
 export const ProfileForm = styled.form`
@@ -14,6 +17,11 @@ export const ProfileForm = styled.form`
     flex: 1;
     gap: 15px;
     padding-inline: 20px;
+    
+    @media screen and (max-width: 800px) {
+        width: 100%;
+        padding-inline: 0;
+    }
 `
 
 export const ProfileInput = styled.input`
@@ -54,6 +62,9 @@ export const ProfileInfo = styled.div`
     justify-content: center;
     flex-direction: column;
     height: 100%;
+    @media screen and (max-width: 800px) {
+        width: 100%;
+    }
 `;
 
 export const InfoLabel = styled.span`

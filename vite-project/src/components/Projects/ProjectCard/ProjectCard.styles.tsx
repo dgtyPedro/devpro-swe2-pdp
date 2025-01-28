@@ -12,6 +12,11 @@ export const ProjectBox = styled.div`
     &:hover {
         transform: scale(1.01);
     }
+
+    @media screen and (max-width: 800px) {
+        flex: 1;
+        width: 100%;
+    }
 `;
 
 export const ProjectInfo = styled.div`

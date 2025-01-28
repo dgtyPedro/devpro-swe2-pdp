@@ -11,6 +11,12 @@ export const Header = styled.header`
     padding: 12px;
     padding-inline: 40px;
     box-shadow: 0 4px 8px #00000014;
+    @media screen and (max-width: 800px) {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
 `;
 
 export const Logo = styled.div`
@@ -42,7 +48,16 @@ export const MobileNav = styled.div`
     @media screen and (max-width: 800px) {
         display: flex;
         flex: 1;
-        justify-content: end;
+        gap: 10px;
+        flex-wrap: wrap;
+        box-sizing: border-box;
     }
+`;
+
+export const MobileItem = styled.div`
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 `;
 

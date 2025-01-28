@@ -11,6 +11,7 @@ export const Window = styled.div`
     overflow-y: scroll;
     @media screen and (max-width: 800px) {
         border-radius: 0;
+        box-sizing: border-box;
     }
 `;
 
