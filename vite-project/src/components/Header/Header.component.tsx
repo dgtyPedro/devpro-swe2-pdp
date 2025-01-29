@@ -13,10 +13,6 @@ export const HeaderComponent = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const user = useSelector((state: RootState) => state.auth.user);
-    const permission = useSelector((state: RootState) => state.auth.permission);
-    console.log(user, permission)
-
     const [openLogin, setOpenLogin] = useState(false);
     const handleOpenLogin = () => setOpenLogin(true);
     const handleCloseLogin = () => setOpenLogin(false);

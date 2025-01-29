@@ -1,4 +1,4 @@
-import {User} from "../../../../../services/types/User.ts";
+import {User} from "../../../../services/types/User.ts";
 
 export interface ChooseCollaboratorProps {
     collaborators: User[]

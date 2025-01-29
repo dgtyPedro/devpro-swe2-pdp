@@ -3,6 +3,7 @@ import {AuthUser, JWTUser, Role, SignUpUser, User} from "./types/User.ts";
 import {setCredentials} from "../features/authSlice.ts";
 import {AppDispatch} from "../app/store.ts";
 import {baseQueryWithAuth} from "./baseQuery.ts";
+import {ToastType} from "../common/hooks/Toast";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const collaboratorApi = createApi({
@@ -77,7 +78,7 @@ export const handleSignIn = async (
     dispatch: AppDispatch,
     signIn: any,
     user: AuthUser,
-    showToast: any
+    showToast: (message: string, theme: ToastType) => void
 ): Promise<boolean> => {
     try {
         const response = await signIn(user).unwrap();
@@ -98,7 +99,7 @@ export const handleSignUp = async (
     dispatch: AppDispatch,
     signUp: any,
     user: SignUpUser,
-    showToast: any
+    showToast: (message: string, theme: ToastType) => void
 ): Promise<boolean> => {
     try {
         const response = await signUp(user).unwrap();
