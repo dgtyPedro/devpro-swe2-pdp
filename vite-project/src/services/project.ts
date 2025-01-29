@@ -23,7 +23,7 @@ export const projectApi = createApi({
             }),
             invalidatesTags: ['Project'],
         }),
-        uploadProject: builder.mutation<Project, Partial<Project>>({
+        updateProject: builder.mutation<Project, Partial<Project>>({
             query: (project) => ({
                 url: 'projects/' + project.id,
                 method: 'PUT',
@@ -45,6 +45,6 @@ export const {
     useGetProjectsQuery,
     useGetProjectQuery,
     useCreateProjectMutation,
-    useUploadProjectMutation,
+    useUpdateProjectMutation,
     useDeleteProjectMutation
 } = projectApi

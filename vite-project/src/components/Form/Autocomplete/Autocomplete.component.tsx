@@ -33,7 +33,7 @@ const Listbox = styled('ul')(({theme}) => ({
 }));
 
 export const AutocompleteComponent = (props: AutocompleteProps) => {
-    const {label, options, onChange} = props;
+    const {defaultValue, label, options, onChange} = props;
 
     const capitalizeFirstLetter = (val: string) => {
         return String(val).charAt(0).toUpperCase() + String(val).slice(1);
@@ -45,10 +45,11 @@ export const AutocompleteComponent = (props: AutocompleteProps) => {
         getListboxProps,
         getOptionProps,
         groupedOptions,
-        value
+        value,
     } = useAutocomplete({
         id: label,
         options: options,
+        defaultValue: defaultValue,
         getOptionLabel: (option) => option.label,
         getOptionKey: (option) => option.value,
     });

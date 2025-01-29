@@ -47,7 +47,12 @@ export const CollaboratorsComponent = () => {
     }
 
     const handleSubmit = async (fields: unknown) => {
-        await createCollaborator(fields as Partial<User>);
+        const response = await createCollaborator(fields as Partial<User>);
+        if (response.error) {
+            showToast("Something went wrong! Check if the user already exists", 'error');
+        } else {
+            showToast("Collaborator Created Successfully", 'info');
+        }
         handleCloseForm();
     }
 

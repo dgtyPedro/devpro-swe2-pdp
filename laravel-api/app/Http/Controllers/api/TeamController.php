@@ -7,6 +7,7 @@ use App\Models\Team;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class TeamController extends Controller
 {
@@ -73,7 +74,27 @@ class TeamController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $team = Team::findOrFail($id);
+
+        if (!$team) {
+            return response()->json(['message' => 'Team not found'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'owner_id' => 'exists:users,id'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $team->owner_id = $request->input('owner_id');
+        $team->save();
+
+        return response()->json([
+            'message' => 'Team updated successfully',
+            'user' => $team,
+        ]);
     }
 
     /**

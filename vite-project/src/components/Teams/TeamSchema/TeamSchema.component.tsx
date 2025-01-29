@@ -3,15 +3,15 @@ import Backdrop from "@mui/material/Backdrop";
 import {Modal} from "@mui/base";
 import {Nc, SchemaBox, Tree} from "./TeamSchema.styles.tsx";
 import {SchemaFragmentComponent} from "./SchemaFragment";
-import {Divider} from "@mui/material";
+import {Divider, Stack} from "@mui/material";
 import {AddCollaboratorComponent} from "./AddCollaborator";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {ChooseCollaboratorComponent} from "./ChooseCollaborator";
 import {
     useAttachCollaboratorMutation,
     useDeleteTeamMutation,
     useDetachCollaboratorMutation,
-    useGetTeamQuery
+    useGetTeamQuery, useUpdateTeamMutation
 } from "../../../services/team.ts";
 import {useOutsideClick} from "../../../common/hooks";
 import {useGetCollaboratorsQuery} from "../../../services/collaborator.ts";
@@ -28,10 +28,12 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
     const [attachCollaborator] = useAttachCollaboratorMutation();
     const [detachCollaborator] = useDetachCollaboratorMutation();
     const [deleteTeam] = useDeleteTeamMutation();
+    const [updateTeam] = useUpdateTeamMutation();
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
     const [openCollaboratorOptions, setOpenCollaboratorOptions] = useState(false)
-    const [editDepth, setEditDepth] = useState<string>()
+    const [openOwnerOptions, setOpenOwnerOptions] = useState(false)
+    const [editDepth, setEditDepth] = useState<string | null>()
 
     const ref = useOutsideClick(handleClose);
     const edit = true;
@@ -41,7 +43,7 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
     const handleCloseDeleteDialog = () => setOpenDeleteDialog(false);
 
     const availableCollaborators = collaborators?.filter(collaborator =>
-        !team?.associates.map(associate => associate.id)?.includes(collaborator.id))
+        !team?.associates.map(associate => associate.id)?.includes(collaborator.id) && collaborator.id !== team?.owner.id)
 
     const addCollaborator = (selectedCollaboratorId: string) => {
         if (!editDepth) return;
@@ -70,6 +72,19 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
         handleClose()
     }
 
+    const handleUpdateOwner = async (selectedCollaboratorId: string) => {
+        const payload = {
+            id: id,
+            owner_id: selectedCollaboratorId
+        }
+        setOpenOwnerOptions(false)
+        updateTeam(payload)
+    }
+
+    useEffect(() => {
+        if (openCollaboratorOptions) setOpenOwnerOptions(false)
+    }, [openCollaboratorOptions])
+
     return (
         <>
             <Modal
@@ -89,6 +104,14 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
                     <h2>{team?.name}'s Hierarchy</h2>
                     <Divider sx={{marginBottom: 2, width: "100%"}}/>
                     {
+                        openOwnerOptions && availableCollaborators &&
+                        <Stack flexDirection={"row"} alignItems={"center"}>
+                            <ChooseCollaboratorComponent collaborators={availableCollaborators}
+                                                         handleAddCollaborator={handleUpdateOwner}/>
+                        </Stack>
+
+                    }
+                    {
                         openCollaboratorOptions && availableCollaborators &&
                         <ChooseCollaboratorComponent collaborators={availableCollaborators}
                                                      handleAddCollaborator={addCollaborator}/>
@@ -100,6 +123,20 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
                                     <AssociateIconComponent hasShadow name={team?.owner.name || ""}
                                                             size={"big"}/>
                                     {team?.owner.name}
+                                    {
+                                        !openOwnerOptions && availableCollaborators &&
+                                        <a onClick={() => {
+                                            setOpenOwnerOptions(true)
+                                            setOpenCollaboratorOptions(false)
+                                            setEditDepth(null)
+                                        }}>
+                                            Edit</a>
+                                    }
+                                    {
+                                        openOwnerOptions && availableCollaborators &&
+                                        <a onClick={() => setOpenOwnerOptions(false)}>
+                                            Editing... (Click to close)</a>
+                                    }
                                 </Nc>
                                 <ul>
                                     {

@@ -48,7 +48,7 @@ export const teamApi = createApi({
                 dispatch(projectApi.util.invalidateTags(["Project"]));
             },
         }),
-        uploadTeam: builder.mutation<Team, Partial<Team>>({
+        updateTeam: builder.mutation<Team, Partial<Team>>({
             query: (team) => ({
                 url: 'teams/' + team.id,
                 method: 'PUT',
@@ -72,7 +72,7 @@ export const teamApi = createApi({
 export const {
     useGetTeamQuery,
     useCreateTeamMutation,
-    useUploadTeamMutation,
+    useUpdateTeamMutation,
     useDeleteTeamMutation,
     useAttachCollaboratorMutation,
     useDetachCollaboratorMutation
