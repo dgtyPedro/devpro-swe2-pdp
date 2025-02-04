@@ -5,11 +5,13 @@ import {LoginComponent} from "../Login";
 import {SignUpComponent} from "../SignUp";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../app/store.ts";
-import {logout} from "../../features/authSlice.ts";
+import {deleteCredentials} from "../../features/authSlice.ts";
+import {useLogoutMutation} from "../../services/collaborator.ts";
 
 export const HeaderComponent = () => {
     const token = useSelector((state: RootState) => state.auth.token);
     const dispatch = useDispatch();
+    const [logout] = useLogoutMutation();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -25,8 +27,9 @@ export const HeaderComponent = () => {
         return location.pathname.includes(route)
     }
 
-    const handleLogout = () => {
-        dispatch(logout());
+    const handleLogout = async() => {
+        await logout();
+        dispatch(deleteCredentials());
         window.location.href = '/about';
     };
 

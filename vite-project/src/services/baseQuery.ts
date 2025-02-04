@@ -1,5 +1,5 @@
 import {BaseQueryFn, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import {logout, setCredentials} from "../features/authSlice.ts";
+import {deleteCredentials, setCredentials} from "../features/authSlice.ts";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const baseQuery = fetchBaseQuery(
@@ -17,7 +17,6 @@ const baseQuery = fetchBaseQuery(
 
 export const baseQueryWithAuth: BaseQueryFn = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions);
-
     if (result.error && result.error.status === 401) {
         const refreshResult: any = await baseQuery(
             {url: "/refresh-token", method: "POST"},
@@ -30,7 +29,7 @@ export const baseQueryWithAuth: BaseQueryFn = async (args, api, extraOptions) =>
 
             result = await baseQuery(args, api, extraOptions);
         } else {
-            api.dispatch(logout());
+            api.dispatch(deleteCredentials());
         }
     }
 

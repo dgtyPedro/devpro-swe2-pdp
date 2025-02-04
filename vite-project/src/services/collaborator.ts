@@ -60,6 +60,12 @@ export const collaboratorApi = createApi({
                 body: user
             }),
         }),
+        logout: builder.mutation<void, void>({
+            query: () => ({
+                url: 'logout/',
+                method: 'POST',
+            }),
+        }),
     }),
 })
 
@@ -71,7 +77,8 @@ export const {
     useUpdateCollaboratorMutation,
     useDeleteCollaboratorMutation,
     useSignUpMutation,
-    useSignInMutation
+    useSignInMutation,
+    useLogoutMutation
 } = collaboratorApi
 
 export const handleSignIn = async (

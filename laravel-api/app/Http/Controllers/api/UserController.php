@@ -184,6 +184,13 @@ class UserController extends Controller
         ], Response::HTTP_OK);
     }
 
+    public function logout()
+    {
+        JWTAuth::invalidate(JWTAuth::getToken());
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
 
     public function refreshToken(): JsonResponse
     {
