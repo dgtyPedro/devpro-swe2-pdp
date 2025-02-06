@@ -55,7 +55,6 @@ Route::middleware([JwtMiddleware::class])->group(function () {
 Route::post('signup', [UserController::class, 'signUp']);
 Route::post('auth', [UserController::class, 'signIn']);
 Route::post('logout', [UserController::class, 'logout']);
-Route::post('refresh-token', [UserController::class, 'refreshToken']);
 
 Route::get('/roles', function () {
     return Role::with('permission')->get();

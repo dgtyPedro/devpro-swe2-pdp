@@ -190,17 +190,4 @@ class UserController extends Controller
 
         return response()->json(['message' => 'Successfully logged out']);
     }
-
-
-    public function refreshToken(): JsonResponse
-    {
-        try {
-            $newToken = JWTAuth::parseToken()->refresh();
-            return response()->json([
-                'token' => $newToken
-            ]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Invalid Token'], 401);
-        }
-    }
 }

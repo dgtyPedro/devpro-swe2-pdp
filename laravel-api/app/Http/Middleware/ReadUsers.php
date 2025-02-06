@@ -17,7 +17,7 @@ class ReadUsers
     public function handle(Request $request, Closure $next): Response
     {
         $permissions = Auth::user()->load('role.permission')->role->permission;
-        if (!$permissions["read-users"]) return response()->json(['error' => 'Forbidden'], 403);
+        if (!str_contains($request->url(), Auth::user()->id) && !$permissions["read-users"]) return response()->json(['error' => 'Forbidden'], 403);
         return $next($request);
     }
 }

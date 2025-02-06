@@ -10,6 +10,7 @@ import {useLogoutMutation} from "../../services/collaborator.ts";
 
 export const HeaderComponent = () => {
     const token = useSelector((state: RootState) => state.auth.token);
+    const permissions = useSelector((state: RootState) => state.auth.permission);
     const dispatch = useDispatch();
     const [logout] = useLogoutMutation();
     const navigate = useNavigate();
@@ -27,7 +28,7 @@ export const HeaderComponent = () => {
         return location.pathname.includes(route)
     }
 
-    const handleLogout = async() => {
+    const handleLogout = async () => {
         await logout();
         dispatch(deleteCredentials());
         window.location.href = '/about';
@@ -51,21 +52,26 @@ export const HeaderComponent = () => {
                 {
                     token ? (
                         <>
-
-                            <Item style={
-                                checkRouteActive("collaborators") ? {
-                                    fontWeight: "1000"
-                                } : {}
-                            } onClick={() => navigate("/collaborators")}>
-                                Collaborators
-                            </Item>
-                            <Item style={
-                                checkRouteActive("projects") ? {
-                                    fontWeight: "1000"
-                                } : {}
-                            } onClick={() => navigate("/projects")}>
-                                Projects
-                            </Item>
+                            {
+                                permissions?.["read-users"] &&
+                                <Item style={
+                                    checkRouteActive("collaborators") ? {
+                                        fontWeight: "1000"
+                                    } : {}
+                                } onClick={() => navigate("/collaborators")}>
+                                    Collaborators
+                                </Item>
+                            }
+                            {
+                                permissions?.["read-teams"] &&
+                                <Item style={
+                                    checkRouteActive("projects") ? {
+                                        fontWeight: "1000"
+                                    } : {}
+                                } onClick={() => navigate("/projects")}>
+                                    Projects
+                                </Item>
+                            }
                             <Item style={
                                 checkRouteActive("profile") ? {
                                     fontWeight: "1000"
@@ -100,20 +106,26 @@ export const HeaderComponent = () => {
                 {
                     token ? (
                         <>
-                            <MobileItem style={
-                                checkRouteActive("collaborators") ? {
-                                    fontWeight: "1000"
-                                } : {}
-                            } onClick={() => navigate("/collaborators")}>
-                                Collaborators
-                            </MobileItem>
-                            <MobileItem style={
-                                checkRouteActive("projects") ? {
-                                    fontWeight: "1000"
-                                } : {}
-                            } onClick={() => navigate("/projects")}>
-                                Projects
-                            </MobileItem>
+                            {
+                                permissions?.["read-users"] &&
+                                <MobileItem style={
+                                    checkRouteActive("collaborators") ? {
+                                        fontWeight: "1000"
+                                    } : {}
+                                } onClick={() => navigate("/collaborators")}>
+                                    Collaborators
+                                </MobileItem>
+                            }
+                            {
+                                permissions?.["read-teams"] &&
+                                <MobileItem style={
+                                    checkRouteActive("projects") ? {
+                                        fontWeight: "1000"
+                                    } : {}
+                                } onClick={() => navigate("/projects")}>
+                                    Projects
+                                </MobileItem>
+                            }
                             <MobileItem style={
                                 checkRouteActive("profile") ? {
                                     fontWeight: "1000"

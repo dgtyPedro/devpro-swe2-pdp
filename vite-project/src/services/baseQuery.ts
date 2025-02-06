@@ -1,5 +1,5 @@
 import {BaseQueryFn, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import {deleteCredentials, setCredentials} from "../features/authSlice.ts";
+import {deleteCredentials} from "../features/authSlice.ts";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const baseQuery = fetchBaseQuery(
@@ -16,21 +16,23 @@ const baseQuery = fetchBaseQuery(
 );
 
 export const baseQueryWithAuth: BaseQueryFn = async (args, api, extraOptions) => {
-    let result = await baseQuery(args, api, extraOptions);
+    const result = await baseQuery(args, api, extraOptions);
     if (result.error && result.error.status === 401) {
-        const refreshResult: any = await baseQuery(
-            {url: "/refresh-token", method: "POST"},
-            api,
-            extraOptions
-        );
+        api.dispatch(deleteCredentials())
 
-        if (refreshResult.data) {
-            api.dispatch(setCredentials({token: refreshResult.data.token}));
-
-            result = await baseQuery(args, api, extraOptions);
-        } else {
-            api.dispatch(deleteCredentials());
-        }
+        // const refreshResult: any = await baseQuery(
+        //     {url: "/refresh-token", method: "POST"},
+        //     api,
+        //     extraOptions
+        // );
+        //
+        // if (refreshResult.data) {
+        //     api.dispatch(setCredentials({token: refreshResult.data.token}));
+        //
+        //     result = await baseQuery(args, api, extraOptions);
+        // } else {
+        //     api.dispatch(deleteCredentials());
+        // }
     }
 
     return result;
