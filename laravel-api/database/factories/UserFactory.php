@@ -105,6 +105,16 @@ class UserFactory extends Factory
                     ...self::ROLES[$role]
                 ]);
             }
+
+            User::create([
+                    'id' => uuid_create(),
+                    'password' => Hash::make("password"),
+                    'name' => "Admin",
+                    'email' => "admin@admin.com",
+                    'onboarding' => false,
+                    'role_id' => Role::where('name', 'ADMIN')->first()->id
+                ]
+            );
         }
 
         $role = Role::inRandomOrder()->first();

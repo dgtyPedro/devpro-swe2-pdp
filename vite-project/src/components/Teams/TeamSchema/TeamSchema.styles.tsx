@@ -21,9 +21,7 @@ export const SchemaBox = styled.div`
 export const Tree = styled.div.attrs({
     className: 'tf-tree tf-custom',
 })`
-    @media screen and (max-width: 800px) {
-       width: 100%;
-    }
+    width: 100%;
 `;
 
 export const Nc = styled.span.attrs({
