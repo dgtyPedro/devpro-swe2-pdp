@@ -15,7 +15,7 @@ Follow the steps below to install and run the project on your local machine.
 ## Prerequisites
 Ensure you have the following installed:
 - PHP (>=8.0) & Composer
-- Node.js & Yarn
+- Node.js (>= 20.00) & Yarn
 - MySQL or PostgreSQL (or another relational supported database)
 - Redis (optional, if used in the Laravel application)
 - Laravel CLI
