@@ -4,6 +4,10 @@ This repository is a study project to prepare for my second seniority assessment
 
 The project consists of a very simple application for managing teams and projects.
 
+<img width="1511" alt="image" src="https://github.com/user-attachments/assets/cd8a7558-004b-4585-bebf-1c52524ad6d5" />
+<img width="1509" alt="image" src="https://github.com/user-attachments/assets/ca2ed658-c71c-4ef7-bf5e-37e44f141124" />
+
+
 # Project Setup Guide
 
 This repository contains two main directories:
