@@ -22,6 +22,11 @@ export const Tree = styled.div.attrs({
     className: 'tf-tree tf-custom',
 })`
     width: 100%;
+    text-align: center;
+`;
+
+export const TreeRoot = styled.div`
+    width: 100%;
 `;
 
 export const Nc = styled.span.attrs({

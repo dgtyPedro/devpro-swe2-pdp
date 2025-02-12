@@ -55,6 +55,7 @@ export const TeamSchemaComponent = (props: TeamSchemaProps) => {
         };
 
         setOpenCollaboratorOptions(false)
+        setEditDepth(null)
 
         attachCollaborator(payload)
     }
