@@ -43,7 +43,13 @@ Ensure you have the following installed:
    ```sh
    php artisan migrate --seed
    ```
-6. Start the Laravel development server:
+
+6. Generate the JWT Secret:
+   ```sh
+   php artisan jwt:secret
+   ```
+   
+7. Start the Laravel development server:
    ```sh
    php artisan serve
    ```
