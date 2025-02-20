@@ -24,12 +24,12 @@ The portal follows a **role-based access control (RBAC)** model with five distin
 - **Onboarding** – A newly created user without permissions until credentials are assigned.  
 
 ### Core Functionalities  
-- ** Collaborators Page** – Lists all team members with detailed profiles, accessible based on user permissions.  
-- ** Projects Page** – Displays all projects, allowing authorized users to create and delete them.  
-- ** Project Dashboard** – A dedicated space for managing project details, tracking progress, and handling teams.  
-- ** Team Management** – Features a **hierarchical tree structure**, visually organizing team relationships and reporting lines.  
-- ** Secure Role-Based Access Control** – Ensures users interact only with the features permitted by their role, enhancing security and compliance.  
-- ** Scalability & Performance** – Designed to support organizations of various sizes, ensuring smooth operation as data and users grow.  
+- **Collaborators Page** – Lists all team members with detailed profiles, accessible based on user permissions.  
+- **Projects Page** – Displays all projects, allowing authorized users to create and delete them.  
+- **Project Dashboard** – A dedicated space for managing project details, tracking progress, and handling teams.  
+- **Team Management** – Features a **hierarchical tree structure**, visually organizing team relationships and reporting lines.  
+- **Secure Role-Based Access Control** – Ensures users interact only with the features permitted by their role, enhancing security and compliance.  
+- **Scalability & Performance** – Designed to support organizations of various sizes, ensuring smooth operation as data and users grow.  
 
 # Project Setup Guide
 
