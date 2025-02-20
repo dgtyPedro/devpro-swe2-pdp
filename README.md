@@ -21,8 +21,6 @@ Ensure you have the following installed:
 - PHP (>=8.0) & Composer
 - Node.js (>= 20.00) & Yarn
 - MySQL or PostgreSQL (or another relational supported database)
-- Redis (optional, if used in the Laravel application)
-- Laravel CLI
 
 ## Backend (Laravel API) Setup
 
