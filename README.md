@@ -36,7 +36,7 @@ Ensure you have the following installed:
    ```sh
    cp .env.example .env
    ```
-   - Update the `.env` file with your database credentials and other necessary configurations.
+   - Update the `.env` file with your database credentials `(DB_CONNECTION, DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD)`.
 4. Generate the application key:
    ```sh
    php artisan key:generate
@@ -77,6 +77,10 @@ Ensure you have the following installed:
    yarn dev
    ```
    - The frontend should now be running at `http://localhost:5173`
+
+### Admin Credentials
+- username: admin@admin.com 
+- password: password
 
 ## Notes
 - Make sure both backend and frontend are running simultaneously.
